@@ -18,11 +18,12 @@ Allow microphone access before tuning. Chrome, Edge, or Safari is recommended.
 ## Features
 
 - Supports `C / D / E / F / G` dizi keys, defaulting to `D`
+- Supports `tube-as-5 / tube-as-2 / tube-as-1` fingering ranges
 - Includes real-time detection and target-note practice modes
 - Shows real-time cents deviation on the meter: center is `0`, left is flat, right is sharp
 - Uses a 1-second rolling average frequency for stable tuning feedback
 - Smoothly returns the meter pointer to center when no stable pitch is detected
-- Remembers the last selected key, mode, and target note
+- Remembers the last selected key, fingering, mode, and target note
 - Fully client-side: no backend, no login, no uploaded recordings
 
 ## Tech Stack

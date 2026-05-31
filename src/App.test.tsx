@@ -45,17 +45,18 @@ describe('App', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { name: '笛子音准测试' })).toBeInTheDocument()
-    expect(screen.getByText('D 调笛')).toBeInTheDocument()
+    expect(screen.getByText('D 调笛 · 筒音作5')).toBeInTheDocument()
     expect(screen.getByText('等待吹奏')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '开始检测' })).toBeInTheDocument()
   })
 
-  it('shows target selector only in target practice mode', () => {
+  it('shows fingering selector and target selector only in target practice mode', () => {
     render(<App />)
 
     fireEvent.click(screen.getByRole('button', { name: '打开调音设置' }))
     const dialog = screen.getByRole('dialog')
 
+    expect(within(dialog).getByText('指法')).toBeInTheDocument()
     expect(within(dialog).queryByText('目标音')).not.toBeInTheDocument()
 
     fireEvent.click(within(dialog).getByRole('radio', { name: '指定音练习' }))
@@ -87,7 +88,12 @@ describe('App', () => {
   it('keeps showing selected target frequency before any pitch in target mode', () => {
     localStorage.setItem(
       preferencesStorageKey,
-      JSON.stringify({ diziKey: 'D', mode: 'target', targetLabel: '5' }),
+      JSON.stringify({
+        diziKey: 'D',
+        fingeringProfileId: 'tube_as_5',
+        mode: 'target',
+        targetLabel: '5',
+      }),
     )
 
     render(<App />)
@@ -96,6 +102,50 @@ describe('App', () => {
     expect(getFrequencyValue('当前频率')).toHaveTextContent('-- Hz')
     expect(getFrequencyValue('平均频率')).toHaveTextContent('-- Hz')
     expect(getFrequencyValue('目标频率')).toHaveTextContent('440.0 Hz')
+  })
+
+  it('uses the restored fingering profile for realtime target matching', async () => {
+    localStorage.setItem(
+      preferencesStorageKey,
+      JSON.stringify({
+        diziKey: 'D',
+        fingeringProfileId: 'tube_as_2',
+        mode: 'realtime',
+        targetLabel: '1',
+      }),
+    )
+
+    render(<App />)
+
+    expect(screen.getByText('D 调笛 · 筒音作2')).toBeInTheDocument()
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: '开始检测' }))
+    })
+
+    act(() => {
+      pitchCallback?.(392)
+    })
+
+    expect(screen.getByText('1', { selector: '.jianpu-display' })).toBeInTheDocument()
+    expect(getFrequencyValue('目标频率')).toHaveTextContent('392.0 Hz')
+  })
+
+  it('falls back to target 1 when the saved target is unavailable for the active fingering', () => {
+    localStorage.setItem(
+      preferencesStorageKey,
+      JSON.stringify({
+        diziKey: 'D',
+        fingeringProfileId: 'tube_as_2',
+        mode: 'target',
+        targetLabel: '高音6',
+      }),
+    )
+
+    render(<App />)
+
+    expect(screen.getByText('目标 1')).toBeInTheDocument()
+    expect(getFrequencyValue('目标频率')).toHaveTextContent('392.0 Hz')
   })
 
   it('clears only realtime readings after 600ms without new pitch and keeps stable history', async () => {
@@ -126,12 +176,17 @@ describe('App', () => {
   it('restores the previously selected mode from localStorage', () => {
     localStorage.setItem(
       preferencesStorageKey,
-      JSON.stringify({ diziKey: 'G', mode: 'target', targetLabel: '高音1' }),
+      JSON.stringify({
+        diziKey: 'G',
+        fingeringProfileId: 'tube_as_1',
+        mode: 'target',
+        targetLabel: '高音1',
+      }),
     )
 
     render(<App />)
 
     expect(screen.getByText('目标 高音1')).toBeInTheDocument()
-    expect(screen.getByText('G 调笛')).toBeInTheDocument()
+    expect(screen.getByText('G 调笛 · 筒音作1')).toBeInTheDocument()
   })
 })

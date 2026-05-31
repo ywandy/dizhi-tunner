@@ -1,13 +1,17 @@
 import {
   diziKeyOptions,
-  jianpuRange,
   type DiziKey,
+  type FingeringProfileId,
   type JianpuLabel,
+  isFingeringProfileId,
+  isJianpuLabel,
+  isTargetLabelForFingering,
 } from './dizi'
 import type { Mode } from './tuning'
 
 export type AppPreferences = {
   diziKey: DiziKey
+  fingeringProfileId: FingeringProfileId
   mode: Mode
   targetLabel: JianpuLabel
 }
@@ -16,6 +20,7 @@ export const preferencesStorageKey = 'dizi-tuner-preferences-v1'
 
 export const defaultPreferences: AppPreferences = {
   diziKey: 'D',
+  fingeringProfileId: 'tube_as_5',
   mode: 'realtime',
   targetLabel: '5',
 }
@@ -36,30 +41,36 @@ function isMode(value: unknown): value is Mode {
   return value === 'realtime' || value === 'target'
 }
 
-function isJianpuLabel(value: unknown): value is JianpuLabel {
-  return (
-    typeof value === 'string' &&
-    jianpuRange.some((item) => item.label === value)
-  )
-}
-
 function parsePreferences(value: unknown): AppPreferences | null {
   if (!value || typeof value !== 'object') return null
 
   const candidate = value as Partial<Record<keyof AppPreferences, unknown>>
+  const hasSavedFingering = 'fingeringProfileId' in candidate
 
   if (
     !isDiziKey(candidate.diziKey) ||
     !isMode(candidate.mode) ||
-    !isJianpuLabel(candidate.targetLabel)
+    !isJianpuLabel(candidate.targetLabel) ||
+    (hasSavedFingering && !isFingeringProfileId(candidate.fingeringProfileId))
   ) {
     return null
   }
 
+  const fingeringProfileId = isFingeringProfileId(candidate.fingeringProfileId)
+    ? candidate.fingeringProfileId
+    : defaultPreferences.fingeringProfileId
+  const targetLabel = isTargetLabelForFingering(
+    candidate.targetLabel,
+    fingeringProfileId,
+  )
+    ? candidate.targetLabel
+    : '1'
+
   return {
     diziKey: candidate.diziKey,
+    fingeringProfileId,
     mode: candidate.mode,
-    targetLabel: candidate.targetLabel,
+    targetLabel,
   }
 }
 

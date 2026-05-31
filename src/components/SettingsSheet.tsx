@@ -1,8 +1,14 @@
 import { SlidersHorizontal } from 'lucide-react'
 
-import type { DiziKey, DiziTarget, JianpuLabel } from '../core/dizi'
+import type {
+  DiziKey,
+  DiziTarget,
+  FingeringProfileId,
+  JianpuLabel,
+} from '../core/dizi'
 import type { Mode } from '../core/tuning'
 import { DiziSelector } from './DiziSelector'
+import { FingeringSelector } from './FingeringSelector'
 import { ModeSwitch } from './ModeSwitch'
 import { TargetSelector } from './TargetSelector'
 import { Button } from './ui/button'
@@ -18,10 +24,12 @@ import {
 
 type SettingsSheetProps = {
   diziKey: DiziKey
+  fingeringProfileId: FingeringProfileId
   mode: Mode
   targetLabel: JianpuLabel
   targets: DiziTarget[]
   onDiziKeyChange: (value: DiziKey) => void
+  onFingeringProfileChange: (value: FingeringProfileId) => void
   onModeChange: (value: Mode) => void
   onTargetLabelChange: (value: JianpuLabel) => void
   open: boolean
@@ -30,8 +38,10 @@ type SettingsSheetProps = {
 
 export function SettingsSheet({
   diziKey,
+  fingeringProfileId,
   mode,
   onDiziKeyChange,
+  onFingeringProfileChange,
   onModeChange,
   onOpenChange,
   onTargetLabelChange,
@@ -55,11 +65,15 @@ export function SettingsSheet({
         <SheetHeader>
           <SheetTitle>调音设置</SheetTitle>
           <SheetDescription>
-            第一版固定为筒音作 5，A4 = 440Hz。
+            支持筒音作 5 / 2 / 1，A4 = 440Hz。
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-5">
           <DiziSelector onChange={onDiziKeyChange} value={diziKey} />
+          <FingeringSelector
+            onChange={onFingeringProfileChange}
+            value={fingeringProfileId}
+          />
           <ModeSwitch onChange={onModeChange} value={mode} />
           {mode === 'target' ? (
             <TargetSelector

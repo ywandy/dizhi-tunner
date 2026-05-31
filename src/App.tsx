@@ -5,7 +5,14 @@ import { StartStopButton } from './components/StartStopButton'
 import { TuningMeter } from './components/TuningMeter'
 import { ResultPanel } from './components/ResultPanel'
 import { Alert } from './components/ui/alert'
-import { buildDiziTargets, type DiziKey, type JianpuLabel } from './core/dizi'
+import {
+  buildDiziTargets,
+  getFingeringProfileLabel,
+  isTargetLabelForFingering,
+  type DiziKey,
+  type FingeringProfileId,
+  type JianpuLabel,
+} from './core/dizi'
 import { startTuner, type TunerController } from './core/audio'
 import { createRollingPitchWindow } from './core/pitchSamples'
 import {
@@ -22,6 +29,10 @@ import {
 
 function getDiziLabel(key: DiziKey) {
   return `${key} 调笛`
+}
+
+function getDiziSummary(key: DiziKey, fingeringProfileId: FingeringProfileId) {
+  return `${getDiziLabel(key)} · ${getFingeringProfileLabel(fingeringProfileId)}`
 }
 
 function getAudioErrorMessage(error: unknown) {
@@ -46,7 +57,7 @@ function getAudioErrorMessage(error: unknown) {
 
 export default function App() {
   const [preferences, setPreferences] = useState<AppPreferences>(loadPreferences)
-  const { diziKey, mode, targetLabel } = preferences
+  const { diziKey, fingeringProfileId, mode, targetLabel } = preferences
   const [isRunning, setIsRunning] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
   const [realtimeFreq, setRealtimeFreq] = useState<number | null>(null)
@@ -56,43 +67,38 @@ export default function App() {
   const [error, setError] = useState<string | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const tunerRef = useRef<TunerController | null>(null)
-  const stateRef = useRef({ diziKey, mode, targetLabel })
+  const stateRef = useRef({ diziKey, fingeringProfileId, mode, targetLabel })
   const pitchWindowRef = useRef(createRollingPitchWindow(1000))
   const lastPitchAtRef = useRef<number | null>(null)
 
-  const targets = useMemo(() => buildDiziTargets(diziKey), [diziKey])
+  const targets = useMemo(
+    () => buildDiziTargets({ diziKey, fingeringProfileId }),
+    [diziKey, fingeringProfileId],
+  )
   const selectedTarget = useMemo(
     () => targets.find((target) => target.label === targetLabel) ?? null,
     [targetLabel, targets],
   )
 
   useEffect(() => {
-    stateRef.current = { diziKey, mode, targetLabel }
-  }, [diziKey, mode, targetLabel])
+    stateRef.current = { diziKey, fingeringProfileId, mode, targetLabel }
+  }, [diziKey, fingeringProfileId, mode, targetLabel])
 
   useEffect(() => {
     savePreferences(preferences)
   }, [preferences])
 
-  const setDiziKey = useCallback((value: DiziKey) => {
-    setPreferences((current) => ({ ...current, diziKey: value }))
-  }, [])
-
-  const setMode = useCallback((value: Mode) => {
-    setPreferences((current) => ({ ...current, mode: value }))
-  }, [])
-
-  const setTargetLabel = useCallback((value: JianpuLabel) => {
-    setPreferences((current) => ({ ...current, targetLabel: value }))
-  }, [])
-
   const calculateResult = useCallback((frequency: number) => {
     const {
       diziKey: activeKey,
+      fingeringProfileId: activeFingeringProfileId,
       mode: activeMode,
       targetLabel: activeTargetLabel,
     } = stateRef.current
-    const activeTargets = buildDiziTargets(activeKey)
+    const activeTargets = buildDiziTargets({
+      diziKey: activeKey,
+      fingeringProfileId: activeFingeringProfileId,
+    })
 
     if (activeMode === 'realtime') {
       return findNearestTarget(frequency, activeTargets)
@@ -121,6 +127,36 @@ export default function App() {
     setRealtimeResult(null)
   }, [])
 
+  const setDiziKey = useCallback(
+    (value: DiziKey) => {
+      setPreferences((current) => ({ ...current, diziKey: value }))
+      clearReadings()
+    },
+    [clearReadings],
+  )
+
+  const setFingeringProfileId = useCallback(
+    (value: FingeringProfileId) => {
+      setPreferences((current) => ({
+        ...current,
+        fingeringProfileId: value,
+        targetLabel: isTargetLabelForFingering(current.targetLabel, value)
+          ? current.targetLabel
+          : '1',
+      }))
+      clearReadings()
+    },
+    [clearReadings],
+  )
+
+  const setMode = useCallback((value: Mode) => {
+    setPreferences((current) => ({ ...current, mode: value }))
+  }, [])
+
+  const setTargetLabel = useCallback((value: JianpuLabel) => {
+    setPreferences((current) => ({ ...current, targetLabel: value }))
+  }, [])
+
   const handlePitch = useCallback(
     (frequency: number) => {
       const now = Date.now()
@@ -141,12 +177,20 @@ export default function App() {
   )
 
   useEffect(() => {
-    stateRef.current = { diziKey, mode, targetLabel }
+    stateRef.current = { diziKey, fingeringProfileId, mode, targetLabel }
     setRealtimeResult(
       realtimeFreq === null ? null : calculateResult(realtimeFreq),
     )
     setAverageResult(averageFreq === null ? null : calculateResult(averageFreq))
-  }, [averageFreq, calculateResult, diziKey, mode, realtimeFreq, targetLabel])
+  }, [
+    averageFreq,
+    calculateResult,
+    diziKey,
+    fingeringProfileId,
+    mode,
+    realtimeFreq,
+    targetLabel,
+  ])
 
   useEffect(() => {
     if (!isRunning) return
@@ -212,13 +256,15 @@ export default function App() {
                 笛子音准测试
               </h1>
               <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">
-                {getDiziLabel(diziKey)}
+                {getDiziSummary(diziKey, fingeringProfileId)}
               </p>
             </div>
             <SettingsSheet
               diziKey={diziKey}
+              fingeringProfileId={fingeringProfileId}
               mode={mode}
               onDiziKeyChange={setDiziKey}
+              onFingeringProfileChange={setFingeringProfileId}
               onModeChange={setMode}
               onOpenChange={setSettingsOpen}
               onTargetLabelChange={setTargetLabel}
