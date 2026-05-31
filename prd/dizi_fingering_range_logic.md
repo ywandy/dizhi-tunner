@@ -42,8 +42,8 @@ dizi_fingering_range_config.json
 也就是：
 
 ```text
-调性负责转调
-指法体系负责音域范围
+调性负责确定筒音物理音高
+指法体系负责把筒音记作低音5 / 低音2 / 1，并据此转调
 算法负责换算频率
 ```
 
@@ -61,14 +61,14 @@ dizi_fingering_range_config.json
     "id": "D",
     "name": "D调笛",
     "tonicWhenTubeAs5": {
-      "noteName": "D4",
-      "midi": 62,
-      "frequencyHz": 293.66
+      "noteName": "D5",
+      "midi": 74,
+      "frequencyHz": 587.33
     },
     "physicalTube": {
-      "noteName": "A3",
-      "midi": 57,
-      "frequencyHz": 220.0
+      "noteName": "A4",
+      "midi": 69,
+      "frequencyHz": 440.0
     }
   }
 }
@@ -78,8 +78,8 @@ dizi_fingering_range_config.json
 
 ```text
 D调笛在筒音作5时：
-1 = D4
-筒音 = 低音5 = A3
+1 = D5
+筒音 = 低音5 = A4
 ```
 
 ---
@@ -121,20 +121,30 @@ const targets = config.resolvedRanges[diziKey][fingeringProfileId].targets
 
 ---
 
-## 4. 为什么每个指法要有独立音域模板
+## 4. 为什么每个指法要有独立标签模板
 
-不同指法体系的最低音、最高音、常用音区不一样。
+同一把笛子的物理音域上下界相同，最低音都是筒音。
+
+不同的是：筒音在不同指法体系里的简谱意义不同。
+
+```text
+筒音作5：筒音 = 低音5
+筒音作2：筒音 = 低音2
+筒音作1：筒音 = 1
+```
+
+因此每个指法体系要维护自己的标签模板。模板决定“同一段物理音域”在当前指法里显示成哪些简谱目标。
 
 以 D 调笛为例：
 
 ### 4.1 筒音作5
 
 ```text
-筒音 A3 = 低音5
-1 = D4
+筒音 A4 = 低音5
+1 = D5
 ```
 
-常用音域：
+目标标签：
 
 ```text
 低音5 低音6 低音7
@@ -145,11 +155,11 @@ const targets = config.resolvedRanges[diziKey][fingeringProfileId].targets
 ### 4.2 筒音作2
 
 ```text
-筒音 A3 = 低音2
-1 = G4
+筒音 A4 = 低音2
+1 = G5
 ```
 
-常用音域：
+目标标签：
 
 ```text
 低音2 低音3 低音4 低音5 低音6 低音7
@@ -160,18 +170,18 @@ const targets = config.resolvedRanges[diziKey][fingeringProfileId].targets
 ### 4.3 筒音作1
 
 ```text
-筒音 A3 = 1
+筒音 A4 = 1
 ```
 
-常用音域：
+目标标签：
 
 ```text
 1 2 3 4 5 6 7
 高音1 高音2 高音3 高音4 高音5 高音6 高音7
-倍高音1
+倍高音1 倍高音2
 ```
 
-所以不能用同一套 `低音5 ~ 高音5` 去套所有指法。
+所以不能用同一套 `低音5 ~ 高音6` 标签去套所有指法；但三套指法应覆盖同一把笛子的最低筒音到最高常用目标范围。
 
 ---
 
@@ -265,21 +275,25 @@ const MAJOR_SCALE: Record<Degree, number> = {
 约定：
 
 ```text
-笛子调性 = 筒音作5时的 1
+笛子调性 = 筒音作5时的 1，并默认落在第 5 八度
 ```
 
 因此：
 
 ```text
 D调笛：
-1 = D4
-筒音 = 低音5 = A3
+1 = D5
+筒音 = 低音5 = A4
+
+E调笛：
+1 = E5
+筒音 = 低音5 = B4 = 493.88Hz
 ```
 
 公式：
 
 ```ts
-function getPhysicalTubeMidi(diziKey: DiziKey, baseOctave = 4): number {
+function getPhysicalTubeMidi(diziKey: DiziKey, baseOctave = 5): number {
   const tonicWhenTubeAs5 = noteToMidi(diziKey, baseOctave)
 
   // 筒音作5时，筒音是低音5
@@ -316,13 +330,13 @@ function getMiddleTonicMidiByTubeAs(
 }
 ```
 
-例子，D 调笛筒音 A3：
+例子，D 调笛筒音 A4：
 
 | 指法 | 筒音含义 | 中音1 |
 |---|---|---|
-| 筒音作5 | A3 = 低音5 | D4 |
-| 筒音作2 | A3 = 低音2 | G4 |
-| 筒音作1 | A3 = 1 | A3 |
+| 筒音作5 | A4 = 低音5 | D5 |
+| 筒音作2 | A4 = 低音2 | G5 |
+| 筒音作1 | A4 = 1 | A4 |
 
 ---
 
@@ -338,7 +352,7 @@ function buildDiziTargets(params: {
   const {
     diziKey,
     fingeringProfileId,
-    baseOctave = 4,
+    baseOctave = 5,
     a4 = 440,
   } = params
 
@@ -565,13 +579,14 @@ RangeTemplate
 ResolvedTargets
 ```
 
-不要机械生成固定音域。
+不要把三套指法理解成三把不同音域的笛子。
 
 正确方式是：
 
 ```text
-每个指法体系单独维护音域模板
-每个调性只负责转成实际音名和频率
+每个指法体系单独维护标签模板
+每个调性先确定筒音物理音高
+算法按“筒音作几”转成实际音名和频率
 ```
 
 这样可以满足：
@@ -579,7 +594,7 @@ ResolvedTargets
 ```text
 不同调
 不同指法
-不同可用音域
+同一音域上下界里的不同简谱命名
 ```
 
 同时仍然保持前端实现简单。

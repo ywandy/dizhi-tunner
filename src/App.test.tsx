@@ -85,50 +85,66 @@ describe('App', () => {
     expect(getFrequencyValue('目标频率')).toHaveTextContent('440.0 Hz')
   })
 
-  it('keeps showing selected target frequency before any pitch in target mode', () => {
+  it('shows E key tube-as-5 low 5 target frequency before any pitch in target mode', () => {
     localStorage.setItem(
       preferencesStorageKey,
       JSON.stringify({
-        diziKey: 'D',
+        diziKey: 'E',
         fingeringProfileId: 'tube_as_5',
         mode: 'target',
-        targetLabel: '5',
+        targetLabel: '低音5',
       }),
     )
 
     render(<App />)
 
-    expect(screen.getByText('目标 5')).toBeInTheDocument()
+    expect(screen.getByText('目标 低音5')).toBeInTheDocument()
     expect(getFrequencyValue('当前频率')).toHaveTextContent('-- Hz')
     expect(getFrequencyValue('平均频率')).toHaveTextContent('-- Hz')
-    expect(getFrequencyValue('目标频率')).toHaveTextContent('440.0 Hz')
+    expect(getFrequencyValue('目标频率')).toHaveTextContent('493.9 Hz')
   })
 
   it('uses the restored fingering profile for realtime target matching', async () => {
     localStorage.setItem(
       preferencesStorageKey,
       JSON.stringify({
-        diziKey: 'D',
+        diziKey: 'E',
         fingeringProfileId: 'tube_as_2',
         mode: 'realtime',
-        targetLabel: '1',
+        targetLabel: '低音5',
       }),
     )
 
     render(<App />)
 
-    expect(screen.getByText('D 调笛 · 筒音作2')).toBeInTheDocument()
+    expect(screen.getByText('E 调笛 · 筒音作2')).toBeInTheDocument()
 
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: '开始检测' }))
     })
 
     act(() => {
-      pitchCallback?.(392)
+      pitchCallback?.(659.26)
     })
 
-    expect(screen.getByText('1', { selector: '.jianpu-display' })).toBeInTheDocument()
-    expect(getFrequencyValue('目标频率')).toHaveTextContent('392.0 Hz')
+    expect(screen.getByText('低音5', { selector: '.jianpu-display' })).toBeInTheDocument()
+    expect(getFrequencyValue('目标频率')).toHaveTextContent('659.3 Hz')
+  })
+
+  it('shows E key tube-as-2 low 5 target frequency in target mode', () => {
+    localStorage.setItem(
+      preferencesStorageKey,
+      JSON.stringify({
+        diziKey: 'E',
+        fingeringProfileId: 'tube_as_2',
+        mode: 'target',
+        targetLabel: '低音5',
+      }),
+    )
+
+    render(<App />)
+
+    expect(getFrequencyValue('目标频率')).toHaveTextContent('659.3 Hz')
   })
 
   it('falls back to target 1 when the saved target is unavailable for the active fingering', () => {
@@ -145,7 +161,7 @@ describe('App', () => {
     render(<App />)
 
     expect(screen.getByText('目标 1')).toBeInTheDocument()
-    expect(getFrequencyValue('目标频率')).toHaveTextContent('392.0 Hz')
+    expect(getFrequencyValue('目标频率')).toHaveTextContent('784.0 Hz')
   })
 
   it('clears only realtime readings after 600ms without new pitch and keeps stable history', async () => {

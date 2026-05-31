@@ -18,7 +18,8 @@ Allow microphone access before tuning. Chrome, Edge, or Safari is recommended.
 ## Features
 
 - Supports `C / D / E / F / G` dizi keys, defaulting to `D`
-- Supports `tube-as-5 / tube-as-2 / tube-as-1` fingering ranges
+- Supports `tube-as-5 / tube-as-2 / tube-as-1` tube-note transposition fingerings
+- Uses the 5th-octave key tonic as the pitch basis; for example, `E · tube-as-5` maps `low 5` to `B4 / 493.88Hz`
 - Includes real-time detection and target-note practice modes
 - Shows real-time cents deviation on the meter: center is `0`, left is flat, right is sharp
 - Uses a 1-second rolling average frequency for stable tuning feedback

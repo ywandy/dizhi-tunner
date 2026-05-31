@@ -91,6 +91,7 @@ const tubeAs1Range = [
   { label: '高音6', degree: 6, octaveShift: 1 },
   { label: '高音7', degree: 7, octaveShift: 1 },
   { label: '倍高音1', degree: 1, octaveShift: 2 },
+  { label: '倍高音2', degree: 2, octaveShift: 2 },
 ] as const satisfies ReadonlyArray<{
   label: string
   degree: Degree
@@ -200,7 +201,7 @@ function normalizeBuildParams(
     return {
       diziKey: input,
       fingeringProfileId: 'tube_as_5',
-      baseOctave: 4,
+      baseOctave: 5,
       a4: 440,
     }
   }
@@ -208,7 +209,7 @@ function normalizeBuildParams(
   return {
     diziKey: input.diziKey,
     fingeringProfileId: input.fingeringProfileId ?? 'tube_as_5',
-    baseOctave: input.baseOctave ?? 4,
+    baseOctave: input.baseOctave ?? 5,
     a4: input.a4 ?? 440,
   }
 }
@@ -256,12 +257,13 @@ export function buildDiziTargets(
     profile.tubeAs,
   )
 
-  return profile.rangeTemplate.map((item) => ({
-    label: item.label,
-    midi: middleTonicMidi + majorScale[item.degree] + item.octaveShift * 12,
-    frequency: midiToFreq(
-      middleTonicMidi + majorScale[item.degree] + item.octaveShift * 12,
-      a4,
-    ),
-  }))
+  return profile.rangeTemplate.map((item) => {
+    const midi = middleTonicMidi + majorScale[item.degree] + item.octaveShift * 12
+
+    return {
+      label: item.label,
+      midi,
+      frequency: midiToFreq(midi, a4),
+    }
+  })
 }

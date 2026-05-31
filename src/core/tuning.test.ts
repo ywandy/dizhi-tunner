@@ -16,18 +16,18 @@ describe('tuning math', () => {
   it('finds the nearest dizi target in realtime mode', () => {
     const result = findNearestTarget(438.6, buildDiziTargets('D'))
 
-    expect(result?.label).toBe('5')
+    expect(result?.label).toBe('低音5')
     expect(result?.frequency).toBeCloseTo(440, 2)
     expect(result?.cents).toBeCloseTo(-5.5, 1)
   })
 
   it('keeps comparing against the selected target in target mode', () => {
-    const target = buildDiziTargets('D').find((item) => item.label === '5')
+    const target = buildDiziTargets('D').find((item) => item.label === '低音5')
 
     expect(target).toBeDefined()
     const result = checkAgainstTarget(293.66, target!)
 
-    expect(result.label).toBe('5')
+    expect(result.label).toBe('低音5')
     expect(result.frequency).toBeCloseTo(440, 2)
     expect(result.cents).toBeLessThan(-600)
   })

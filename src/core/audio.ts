@@ -63,7 +63,7 @@ export async function startTuner(
     if (
       Number.isFinite(pitch) &&
       pitch >= 80 &&
-      pitch <= 2000 &&
+      pitch <= 3000 &&
       clarity >= 0.85
     ) {
       onPitch(pitch)

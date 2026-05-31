@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "configName": "dizi-fingering-range-config",
-  "description": "笛子音准测试 WebApp 的调性 / 指法 / 可用音域配置。范围用于音准目标匹配，不等同于完整物理指法图。",
+  "description": "笛子音准测试 WebApp 的调性 / 筒音指法 / 可用目标配置。范围用于音准目标匹配，不等同于完整物理指法图。",
   "defaults": {
     "diziKey": "D",
     "fingeringProfileId": "tube_as_5",
     "a4": 440,
-    "baseOctave": 4,
+    "baseOctave": 5,
     "meterCentsRange": [
       -50,
       50
@@ -132,70 +132,70 @@
       "id": "C",
       "name": "C调笛",
       "tonicWhenTubeAs5": {
-        "noteName": "C4",
-        "midi": 60,
-        "frequencyHz": 261.63
+        "noteName": "C5",
+        "midi": 72,
+        "frequencyHz": 523.25
       },
       "physicalTube": {
-        "noteName": "G3",
-        "midi": 55,
-        "frequencyHz": 196.0
+        "noteName": "G4",
+        "midi": 67,
+        "frequencyHz": 392
       }
     },
     "D": {
       "id": "D",
       "name": "D调笛",
       "tonicWhenTubeAs5": {
-        "noteName": "D4",
-        "midi": 62,
-        "frequencyHz": 293.66
+        "noteName": "D5",
+        "midi": 74,
+        "frequencyHz": 587.33
       },
       "physicalTube": {
-        "noteName": "A3",
-        "midi": 57,
-        "frequencyHz": 220.0
+        "noteName": "A4",
+        "midi": 69,
+        "frequencyHz": 440
       }
     },
     "E": {
       "id": "E",
       "name": "E调笛",
       "tonicWhenTubeAs5": {
-        "noteName": "E4",
-        "midi": 64,
-        "frequencyHz": 329.63
+        "noteName": "E5",
+        "midi": 76,
+        "frequencyHz": 659.26
       },
       "physicalTube": {
-        "noteName": "B3",
-        "midi": 59,
-        "frequencyHz": 246.94
+        "noteName": "B4",
+        "midi": 71,
+        "frequencyHz": 493.88
       }
     },
     "F": {
       "id": "F",
       "name": "F调笛",
       "tonicWhenTubeAs5": {
-        "noteName": "F4",
-        "midi": 65,
-        "frequencyHz": 349.23
+        "noteName": "F5",
+        "midi": 77,
+        "frequencyHz": 698.46
       },
       "physicalTube": {
-        "noteName": "C4",
-        "midi": 60,
-        "frequencyHz": 261.63
+        "noteName": "C5",
+        "midi": 72,
+        "frequencyHz": 523.25
       }
     },
     "G": {
       "id": "G",
       "name": "G调笛",
       "tonicWhenTubeAs5": {
-        "noteName": "G4",
-        "midi": 67,
-        "frequencyHz": 392.0
+        "noteName": "G5",
+        "midi": 79,
+        "frequencyHz": 783.99
       },
       "physicalTube": {
-        "noteName": "D4",
-        "midi": 62,
-        "frequencyHz": 293.66
+        "noteName": "D5",
+        "midi": 74,
+        "frequencyHz": 587.33
       }
     }
   },
@@ -412,7 +412,7 @@
       "id": "tube_as_1",
       "name": "筒音作1",
       "tubeAs": 1,
-      "description": "筒音即为1。音域从1开始，向上扩展到高音区。",
+      "description": "筒音即为1。与同一把笛子的常用物理音域上界保持一致。",
       "rangeTemplate": [
         {
           "id": "mid_1",
@@ -503,6 +503,12 @@
           "label": "倍高音1",
           "degree": 1,
           "octaveShift": 2
+        },
+        {
+          "id": "double_high_2",
+          "label": "倍高音2",
+          "degree": 2,
+          "octaveShift": 2
         }
       ]
     }
@@ -511,9 +517,9 @@
     "C": {
       "tube_as_5": {
         "middleTonic": {
-          "noteName": "C4",
-          "midi": 60,
-          "frequencyHz": 261.63
+          "noteName": "C5",
+          "midi": 72,
+          "frequencyHz": 523.25
         },
         "targets": [
           {
@@ -521,152 +527,152 @@
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "G3",
-            "midi": 55,
-            "frequencyHz": 196.0
+            "noteName": "G4",
+            "midi": 67,
+            "frequencyHz": 392
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "A3",
-            "midi": 57,
-            "frequencyHz": 220.0
+            "noteName": "A4",
+            "midi": 69,
+            "frequencyHz": 440
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
+            "noteName": "C5",
+            "midi": 72,
+            "frequencyHz": 523.25
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "F4",
-            "midi": 65,
-            "frequencyHz": 349.23
+            "noteName": "F5",
+            "midi": 77,
+            "frequencyHz": 698.46
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "F5",
-            "midi": 77,
-            "frequencyHz": 698.46
+            "noteName": "F6",
+            "midi": 89,
+            "frequencyHz": 1396.91
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           }
         ]
       },
       "tube_as_2": {
         "middleTonic": {
-          "noteName": "F4",
-          "midi": 65,
-          "frequencyHz": 349.23
+          "noteName": "F5",
+          "midi": 77,
+          "frequencyHz": 698.46
         },
         "targets": [
           {
@@ -674,152 +680,152 @@
             "label": "低音2",
             "degree": 2,
             "octaveShift": -1,
-            "noteName": "G3",
-            "midi": 55,
-            "frequencyHz": 196.0
+            "noteName": "G4",
+            "midi": 67,
+            "frequencyHz": 392
           },
           {
             "id": "low_3",
             "label": "低音3",
             "degree": 3,
             "octaveShift": -1,
-            "noteName": "A3",
-            "midi": 57,
-            "frequencyHz": 220.0
+            "noteName": "A4",
+            "midi": 69,
+            "frequencyHz": 440
           },
           {
             "id": "low_4",
             "label": "低音4",
             "degree": 4,
             "octaveShift": -1,
-            "noteName": "Bb3",
-            "midi": 58,
-            "frequencyHz": 233.08
+            "noteName": "Bb4",
+            "midi": 70,
+            "frequencyHz": 466.16
           },
           {
             "id": "low_5",
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
+            "noteName": "C5",
+            "midi": 72,
+            "frequencyHz": 523.25
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "F4",
-            "midi": 65,
-            "frequencyHz": 349.23
+            "noteName": "F5",
+            "midi": 77,
+            "frequencyHz": 698.46
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "Bb4",
-            "midi": 70,
-            "frequencyHz": 466.16
+            "noteName": "Bb5",
+            "midi": 82,
+            "frequencyHz": 932.33
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "F5",
-            "midi": 77,
-            "frequencyHz": 698.46
+            "noteName": "F6",
+            "midi": 89,
+            "frequencyHz": 1396.91
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           }
         ]
       },
       "tube_as_1": {
         "middleTonic": {
-          "noteName": "G3",
-          "midi": 55,
-          "frequencyHz": 196.0
+          "noteName": "G4",
+          "midi": 67,
+          "frequencyHz": 392
         },
         "targets": [
           {
@@ -827,135 +833,144 @@
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "G3",
-            "midi": 55,
-            "frequencyHz": 196.0
+            "noteName": "G4",
+            "midi": 67,
+            "frequencyHz": 392
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "A3",
-            "midi": 57,
-            "frequencyHz": 220.0
+            "noteName": "A4",
+            "midi": 69,
+            "frequencyHz": 440
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
+            "noteName": "C5",
+            "midi": 72,
+            "frequencyHz": 523.25
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_7",
             "label": "高音7",
             "degree": 7,
             "octaveShift": 1,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "double_high_1",
             "label": "倍高音1",
             "degree": 1,
             "octaveShift": 2,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
+          },
+          {
+            "id": "double_high_2",
+            "label": "倍高音2",
+            "degree": 2,
+            "octaveShift": 2,
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           }
         ]
       }
@@ -963,9 +978,9 @@
     "D": {
       "tube_as_5": {
         "middleTonic": {
-          "noteName": "D4",
-          "midi": 62,
-          "frequencyHz": 293.66
+          "noteName": "D5",
+          "midi": 74,
+          "frequencyHz": 587.33
         },
         "targets": [
           {
@@ -973,152 +988,152 @@
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "A3",
-            "midi": 57,
-            "frequencyHz": 220.0
+            "noteName": "A4",
+            "midi": 69,
+            "frequencyHz": 440
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "C#4",
-            "midi": 61,
-            "frequencyHz": 277.18
+            "noteName": "C#5",
+            "midi": 73,
+            "frequencyHz": 554.37
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "C#5",
-            "midi": 73,
-            "frequencyHz": 554.37
+            "noteName": "C#6",
+            "midi": 85,
+            "frequencyHz": 1108.73
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
           }
         ]
       },
       "tube_as_2": {
         "middleTonic": {
-          "noteName": "G4",
-          "midi": 67,
-          "frequencyHz": 392.0
+          "noteName": "G5",
+          "midi": 79,
+          "frequencyHz": 783.99
         },
         "targets": [
           {
@@ -1126,152 +1141,152 @@
             "label": "低音2",
             "degree": 2,
             "octaveShift": -1,
-            "noteName": "A3",
-            "midi": 57,
-            "frequencyHz": 220.0
+            "noteName": "A4",
+            "midi": 69,
+            "frequencyHz": 440
           },
           {
             "id": "low_3",
             "label": "低音3",
             "degree": 3,
             "octaveShift": -1,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "low_4",
             "label": "低音4",
             "degree": 4,
             "octaveShift": -1,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
+            "noteName": "C5",
+            "midi": 72,
+            "frequencyHz": 523.25
           },
           {
             "id": "low_5",
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
           }
         ]
       },
       "tube_as_1": {
         "middleTonic": {
-          "noteName": "A3",
-          "midi": 57,
-          "frequencyHz": 220.0
+          "noteName": "A4",
+          "midi": 69,
+          "frequencyHz": 440
         },
         "targets": [
           {
@@ -1279,135 +1294,144 @@
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "A3",
-            "midi": 57,
-            "frequencyHz": 220.0
+            "noteName": "A4",
+            "midi": 69,
+            "frequencyHz": 440
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "C#4",
-            "midi": 61,
-            "frequencyHz": 277.18
+            "noteName": "C#5",
+            "midi": 73,
+            "frequencyHz": 554.37
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "G#4",
-            "midi": 68,
-            "frequencyHz": 415.3
+            "noteName": "G#5",
+            "midi": 80,
+            "frequencyHz": 830.61
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "C#5",
-            "midi": 73,
-            "frequencyHz": 554.37
+            "noteName": "C#6",
+            "midi": 85,
+            "frequencyHz": 1108.73
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "high_7",
             "label": "高音7",
             "degree": 7,
             "octaveShift": 1,
-            "noteName": "G#5",
-            "midi": 80,
-            "frequencyHz": 830.61
+            "noteName": "G#6",
+            "midi": 92,
+            "frequencyHz": 1661.22
           },
           {
             "id": "double_high_1",
             "label": "倍高音1",
             "degree": 1,
             "octaveShift": 2,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
+          },
+          {
+            "id": "double_high_2",
+            "label": "倍高音2",
+            "degree": 2,
+            "octaveShift": 2,
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
           }
         ]
       }
@@ -1415,9 +1439,9 @@
     "E": {
       "tube_as_5": {
         "middleTonic": {
-          "noteName": "E4",
-          "midi": 64,
-          "frequencyHz": 329.63
+          "noteName": "E5",
+          "midi": 76,
+          "frequencyHz": 659.26
         },
         "targets": [
           {
@@ -1425,152 +1449,152 @@
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "C#4",
-            "midi": 61,
-            "frequencyHz": 277.18
+            "noteName": "C#5",
+            "midi": 73,
+            "frequencyHz": 554.37
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "D#4",
-            "midi": 63,
-            "frequencyHz": 311.13
+            "noteName": "D#5",
+            "midi": 75,
+            "frequencyHz": 622.25
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "G#4",
-            "midi": 68,
-            "frequencyHz": 415.3
+            "noteName": "G#5",
+            "midi": 80,
+            "frequencyHz": 830.61
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "C#5",
-            "midi": 73,
-            "frequencyHz": 554.37
+            "noteName": "C#6",
+            "midi": 85,
+            "frequencyHz": 1108.73
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "D#5",
-            "midi": 75,
-            "frequencyHz": 622.25
+            "noteName": "D#6",
+            "midi": 87,
+            "frequencyHz": 1244.51
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "G#5",
-            "midi": 80,
-            "frequencyHz": 830.61
+            "noteName": "G#6",
+            "midi": 92,
+            "frequencyHz": 1661.22
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "C#6",
-            "midi": 85,
-            "frequencyHz": 1108.73
+            "noteName": "C#7",
+            "midi": 97,
+            "frequencyHz": 2217.46
           }
         ]
       },
       "tube_as_2": {
         "middleTonic": {
-          "noteName": "A4",
-          "midi": 69,
-          "frequencyHz": 440.0
+          "noteName": "A5",
+          "midi": 81,
+          "frequencyHz": 880
         },
         "targets": [
           {
@@ -1578,152 +1602,152 @@
             "label": "低音2",
             "degree": 2,
             "octaveShift": -1,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "low_3",
             "label": "低音3",
             "degree": 3,
             "octaveShift": -1,
-            "noteName": "C#4",
-            "midi": 61,
-            "frequencyHz": 277.18
+            "noteName": "C#5",
+            "midi": 73,
+            "frequencyHz": 554.37
           },
           {
             "id": "low_4",
             "label": "低音4",
             "degree": 4,
             "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "low_5",
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "G#4",
-            "midi": 68,
-            "frequencyHz": 415.3
+            "noteName": "G#5",
+            "midi": 80,
+            "frequencyHz": 830.61
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "C#5",
-            "midi": 73,
-            "frequencyHz": 554.37
+            "noteName": "C#6",
+            "midi": 85,
+            "frequencyHz": 1108.73
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "G#5",
-            "midi": 80,
-            "frequencyHz": 830.61
+            "noteName": "G#6",
+            "midi": 92,
+            "frequencyHz": 1661.22
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "C#6",
-            "midi": 85,
-            "frequencyHz": 1108.73
+            "noteName": "C#7",
+            "midi": 97,
+            "frequencyHz": 2217.46
           }
         ]
       },
       "tube_as_1": {
         "middleTonic": {
-          "noteName": "B3",
-          "midi": 59,
-          "frequencyHz": 246.94
+          "noteName": "B4",
+          "midi": 71,
+          "frequencyHz": 493.88
         },
         "targets": [
           {
@@ -1731,135 +1755,144 @@
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "B3",
-            "midi": 59,
-            "frequencyHz": 246.94
+            "noteName": "B4",
+            "midi": 71,
+            "frequencyHz": 493.88
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "C#4",
-            "midi": 61,
-            "frequencyHz": 277.18
+            "noteName": "C#5",
+            "midi": 73,
+            "frequencyHz": 554.37
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "D#4",
-            "midi": 63,
-            "frequencyHz": 311.13
+            "noteName": "D#5",
+            "midi": 75,
+            "frequencyHz": 622.25
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "G#4",
-            "midi": 68,
-            "frequencyHz": 415.3
+            "noteName": "G#5",
+            "midi": 80,
+            "frequencyHz": 830.61
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "A#4",
-            "midi": 70,
-            "frequencyHz": 466.16
+            "noteName": "A#5",
+            "midi": 82,
+            "frequencyHz": 932.33
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "C#5",
-            "midi": 73,
-            "frequencyHz": 554.37
+            "noteName": "C#6",
+            "midi": 85,
+            "frequencyHz": 1108.73
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "D#5",
-            "midi": 75,
-            "frequencyHz": 622.25
+            "noteName": "D#6",
+            "midi": 87,
+            "frequencyHz": 1244.51
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "G#5",
-            "midi": 80,
-            "frequencyHz": 830.61
+            "noteName": "G#6",
+            "midi": 92,
+            "frequencyHz": 1661.22
           },
           {
             "id": "high_7",
             "label": "高音7",
             "degree": 7,
             "octaveShift": 1,
-            "noteName": "A#5",
-            "midi": 82,
-            "frequencyHz": 932.33
+            "noteName": "A#6",
+            "midi": 94,
+            "frequencyHz": 1864.66
           },
           {
             "id": "double_high_1",
             "label": "倍高音1",
             "degree": 1,
             "octaveShift": 2,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
+          },
+          {
+            "id": "double_high_2",
+            "label": "倍高音2",
+            "degree": 2,
+            "octaveShift": 2,
+            "noteName": "C#7",
+            "midi": 97,
+            "frequencyHz": 2217.46
           }
         ]
       }
@@ -1867,9 +1900,9 @@
     "F": {
       "tube_as_5": {
         "middleTonic": {
-          "noteName": "F4",
-          "midi": 65,
-          "frequencyHz": 349.23
+          "noteName": "F5",
+          "midi": 77,
+          "frequencyHz": 698.46
         },
         "targets": [
           {
@@ -1877,152 +1910,152 @@
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
+            "noteName": "C5",
+            "midi": 72,
+            "frequencyHz": 523.25
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "F4",
-            "midi": 65,
-            "frequencyHz": 349.23
+            "noteName": "F5",
+            "midi": 77,
+            "frequencyHz": 698.46
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "Bb4",
-            "midi": 70,
-            "frequencyHz": 466.16
+            "noteName": "Bb5",
+            "midi": 82,
+            "frequencyHz": 932.33
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "F5",
-            "midi": 77,
-            "frequencyHz": 698.46
+            "noteName": "F6",
+            "midi": 89,
+            "frequencyHz": 1396.91
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "Bb5",
-            "midi": 82,
-            "frequencyHz": 932.33
+            "noteName": "Bb6",
+            "midi": 94,
+            "frequencyHz": 1864.66
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "C6",
-            "midi": 84,
-            "frequencyHz": 1046.5
+            "noteName": "C7",
+            "midi": 96,
+            "frequencyHz": 2093
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "D6",
-            "midi": 86,
-            "frequencyHz": 1174.66
+            "noteName": "D7",
+            "midi": 98,
+            "frequencyHz": 2349.32
           }
         ]
       },
       "tube_as_2": {
         "middleTonic": {
-          "noteName": "Bb4",
-          "midi": 70,
-          "frequencyHz": 466.16
+          "noteName": "Bb5",
+          "midi": 82,
+          "frequencyHz": 932.33
         },
         "targets": [
           {
@@ -2030,447 +2063,148 @@
             "label": "低音2",
             "degree": 2,
             "octaveShift": -1,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
+            "noteName": "C5",
+            "midi": 72,
+            "frequencyHz": 523.25
           },
           {
             "id": "low_3",
             "label": "低音3",
             "degree": 3,
             "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "low_4",
             "label": "低音4",
             "degree": 4,
             "octaveShift": -1,
-            "noteName": "Eb4",
-            "midi": 63,
-            "frequencyHz": 311.13
-          },
-          {
-            "id": "low_5",
-            "label": "低音5",
-            "degree": 5,
-            "octaveShift": -1,
-            "noteName": "F4",
-            "midi": 65,
-            "frequencyHz": 349.23
-          },
-          {
-            "id": "low_6",
-            "label": "低音6",
-            "degree": 6,
-            "octaveShift": -1,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
-          },
-          {
-            "id": "low_7",
-            "label": "低音7",
-            "degree": 7,
-            "octaveShift": -1,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
-          },
-          {
-            "id": "mid_1",
-            "label": "1",
-            "degree": 1,
-            "octaveShift": 0,
-            "noteName": "Bb4",
-            "midi": 70,
-            "frequencyHz": 466.16
-          },
-          {
-            "id": "mid_2",
-            "label": "2",
-            "degree": 2,
-            "octaveShift": 0,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
-          },
-          {
-            "id": "mid_3",
-            "label": "3",
-            "degree": 3,
-            "octaveShift": 0,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
-          },
-          {
-            "id": "mid_4",
-            "label": "4",
-            "degree": 4,
-            "octaveShift": 0,
             "noteName": "Eb5",
             "midi": 75,
             "frequencyHz": 622.25
           },
           {
-            "id": "mid_5",
-            "label": "5",
-            "degree": 5,
-            "octaveShift": 0,
-            "noteName": "F5",
-            "midi": 77,
-            "frequencyHz": 698.46
-          },
-          {
-            "id": "mid_6",
-            "label": "6",
-            "degree": 6,
-            "octaveShift": 0,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
-          },
-          {
-            "id": "mid_7",
-            "label": "7",
-            "degree": 7,
-            "octaveShift": 0,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
-          },
-          {
-            "id": "high_1",
-            "label": "高音1",
-            "degree": 1,
-            "octaveShift": 1,
-            "noteName": "Bb5",
-            "midi": 82,
-            "frequencyHz": 932.33
-          },
-          {
-            "id": "high_2",
-            "label": "高音2",
-            "degree": 2,
-            "octaveShift": 1,
-            "noteName": "C6",
-            "midi": 84,
-            "frequencyHz": 1046.5
-          },
-          {
-            "id": "high_3",
-            "label": "高音3",
-            "degree": 3,
-            "octaveShift": 1,
-            "noteName": "D6",
-            "midi": 86,
-            "frequencyHz": 1174.66
-          }
-        ]
-      },
-      "tube_as_1": {
-        "middleTonic": {
-          "noteName": "C4",
-          "midi": 60,
-          "frequencyHz": 261.63
-        },
-        "targets": [
-          {
-            "id": "mid_1",
-            "label": "1",
-            "degree": 1,
-            "octaveShift": 0,
-            "noteName": "C4",
-            "midi": 60,
-            "frequencyHz": 261.63
-          },
-          {
-            "id": "mid_2",
-            "label": "2",
-            "degree": 2,
-            "octaveShift": 0,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
-          },
-          {
-            "id": "mid_3",
-            "label": "3",
-            "degree": 3,
-            "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
-          },
-          {
-            "id": "mid_4",
-            "label": "4",
-            "degree": 4,
-            "octaveShift": 0,
-            "noteName": "F4",
-            "midi": 65,
-            "frequencyHz": 349.23
-          },
-          {
-            "id": "mid_5",
-            "label": "5",
-            "degree": 5,
-            "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
-          },
-          {
-            "id": "mid_6",
-            "label": "6",
-            "degree": 6,
-            "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
-          },
-          {
-            "id": "mid_7",
-            "label": "7",
-            "degree": 7,
-            "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
-          },
-          {
-            "id": "high_1",
-            "label": "高音1",
-            "degree": 1,
-            "octaveShift": 1,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
-          },
-          {
-            "id": "high_2",
-            "label": "高音2",
-            "degree": 2,
-            "octaveShift": 1,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
-          },
-          {
-            "id": "high_3",
-            "label": "高音3",
-            "degree": 3,
-            "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
-          },
-          {
-            "id": "high_4",
-            "label": "高音4",
-            "degree": 4,
-            "octaveShift": 1,
-            "noteName": "F5",
-            "midi": 77,
-            "frequencyHz": 698.46
-          },
-          {
-            "id": "high_5",
-            "label": "高音5",
-            "degree": 5,
-            "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
-          },
-          {
-            "id": "high_6",
-            "label": "高音6",
-            "degree": 6,
-            "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
-          },
-          {
-            "id": "high_7",
-            "label": "高音7",
-            "degree": 7,
-            "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
-          },
-          {
-            "id": "double_high_1",
-            "label": "倍高音1",
-            "degree": 1,
-            "octaveShift": 2,
-            "noteName": "C6",
-            "midi": 84,
-            "frequencyHz": 1046.5
-          }
-        ]
-      }
-    },
-    "G": {
-      "tube_as_5": {
-        "middleTonic": {
-          "noteName": "G4",
-          "midi": 67,
-          "frequencyHz": 392.0
-        },
-        "targets": [
-          {
             "id": "low_5",
             "label": "低音5",
             "degree": 5,
             "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "F5",
+            "midi": 77,
+            "frequencyHz": 698.46
           },
           {
             "id": "low_6",
             "label": "低音6",
             "degree": 6,
             "octaveShift": -1,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "low_7",
             "label": "低音7",
             "degree": 7,
             "octaveShift": -1,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "Bb5",
+            "midi": 82,
+            "frequencyHz": 932.33
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "C5",
-            "midi": 72,
-            "frequencyHz": 523.25
+            "noteName": "Eb6",
+            "midi": 87,
+            "frequencyHz": 1244.51
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "F6",
+            "midi": 89,
+            "frequencyHz": 1396.91
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "Bb6",
+            "midi": 94,
+            "frequencyHz": 1864.66
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "C7",
+            "midi": 96,
+            "frequencyHz": 2093
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
-          },
-          {
-            "id": "high_4",
-            "label": "高音4",
-            "degree": 4,
-            "octaveShift": 1,
-            "noteName": "C6",
-            "midi": 84,
-            "frequencyHz": 1046.5
-          },
-          {
-            "id": "high_5",
-            "label": "高音5",
-            "degree": 5,
-            "octaveShift": 1,
-            "noteName": "D6",
-            "midi": 86,
-            "frequencyHz": 1174.66
-          },
-          {
-            "id": "high_6",
-            "label": "高音6",
-            "degree": 6,
-            "octaveShift": 1,
-            "noteName": "E6",
-            "midi": 88,
-            "frequencyHz": 1318.51
+            "noteName": "D7",
+            "midi": 98,
+            "frequencyHz": 2349.32
           }
         ]
       },
-      "tube_as_2": {
+      "tube_as_1": {
         "middleTonic": {
           "noteName": "C5",
           "midi": 72,
@@ -2478,60 +2212,6 @@
         },
         "targets": [
           {
-            "id": "low_2",
-            "label": "低音2",
-            "degree": 2,
-            "octaveShift": -1,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
-          },
-          {
-            "id": "low_3",
-            "label": "低音3",
-            "degree": 3,
-            "octaveShift": -1,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
-          },
-          {
-            "id": "low_4",
-            "label": "低音4",
-            "degree": 4,
-            "octaveShift": -1,
-            "noteName": "F4",
-            "midi": 65,
-            "frequencyHz": 349.23
-          },
-          {
-            "id": "low_5",
-            "label": "低音5",
-            "degree": 5,
-            "octaveShift": -1,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
-          },
-          {
-            "id": "low_6",
-            "label": "低音6",
-            "degree": 6,
-            "octaveShift": -1,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
-          },
-          {
-            "id": "low_7",
-            "label": "低音7",
-            "degree": 7,
-            "octaveShift": -1,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
-          },
-          {
             "id": "mid_1",
             "label": "1",
             "degree": 1,
@@ -2583,7 +2263,7 @@
             "octaveShift": 0,
             "noteName": "A5",
             "midi": 81,
-            "frequencyHz": 880.0
+            "frequencyHz": 880
           },
           {
             "id": "mid_7",
@@ -2620,14 +2300,376 @@
             "noteName": "E6",
             "midi": 88,
             "frequencyHz": 1318.51
+          },
+          {
+            "id": "high_4",
+            "label": "高音4",
+            "degree": 4,
+            "octaveShift": 1,
+            "noteName": "F6",
+            "midi": 89,
+            "frequencyHz": 1396.91
+          },
+          {
+            "id": "high_5",
+            "label": "高音5",
+            "degree": 5,
+            "octaveShift": 1,
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
+          },
+          {
+            "id": "high_6",
+            "label": "高音6",
+            "degree": 6,
+            "octaveShift": 1,
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
+          },
+          {
+            "id": "high_7",
+            "label": "高音7",
+            "degree": 7,
+            "octaveShift": 1,
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
+          },
+          {
+            "id": "double_high_1",
+            "label": "倍高音1",
+            "degree": 1,
+            "octaveShift": 2,
+            "noteName": "C7",
+            "midi": 96,
+            "frequencyHz": 2093
+          },
+          {
+            "id": "double_high_2",
+            "label": "倍高音2",
+            "degree": 2,
+            "octaveShift": 2,
+            "noteName": "D7",
+            "midi": 98,
+            "frequencyHz": 2349.32
+          }
+        ]
+      }
+    },
+    "G": {
+      "tube_as_5": {
+        "middleTonic": {
+          "noteName": "G5",
+          "midi": 79,
+          "frequencyHz": 783.99
+        },
+        "targets": [
+          {
+            "id": "low_5",
+            "label": "低音5",
+            "degree": 5,
+            "octaveShift": -1,
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
+          },
+          {
+            "id": "low_6",
+            "label": "低音6",
+            "degree": 6,
+            "octaveShift": -1,
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
+          },
+          {
+            "id": "low_7",
+            "label": "低音7",
+            "degree": 7,
+            "octaveShift": -1,
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
+          },
+          {
+            "id": "mid_1",
+            "label": "1",
+            "degree": 1,
+            "octaveShift": 0,
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
+          },
+          {
+            "id": "mid_2",
+            "label": "2",
+            "degree": 2,
+            "octaveShift": 0,
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
+          },
+          {
+            "id": "mid_3",
+            "label": "3",
+            "degree": 3,
+            "octaveShift": 0,
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
+          },
+          {
+            "id": "mid_4",
+            "label": "4",
+            "degree": 4,
+            "octaveShift": 0,
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
+          },
+          {
+            "id": "mid_5",
+            "label": "5",
+            "degree": 5,
+            "octaveShift": 0,
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
+          },
+          {
+            "id": "mid_6",
+            "label": "6",
+            "degree": 6,
+            "octaveShift": 0,
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
+          },
+          {
+            "id": "mid_7",
+            "label": "7",
+            "degree": 7,
+            "octaveShift": 0,
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
+          },
+          {
+            "id": "high_1",
+            "label": "高音1",
+            "degree": 1,
+            "octaveShift": 1,
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
+          },
+          {
+            "id": "high_2",
+            "label": "高音2",
+            "degree": 2,
+            "octaveShift": 1,
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
+          },
+          {
+            "id": "high_3",
+            "label": "高音3",
+            "degree": 3,
+            "octaveShift": 1,
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
+          },
+          {
+            "id": "high_4",
+            "label": "高音4",
+            "degree": 4,
+            "octaveShift": 1,
+            "noteName": "C7",
+            "midi": 96,
+            "frequencyHz": 2093
+          },
+          {
+            "id": "high_5",
+            "label": "高音5",
+            "degree": 5,
+            "octaveShift": 1,
+            "noteName": "D7",
+            "midi": 98,
+            "frequencyHz": 2349.32
+          },
+          {
+            "id": "high_6",
+            "label": "高音6",
+            "degree": 6,
+            "octaveShift": 1,
+            "noteName": "E7",
+            "midi": 100,
+            "frequencyHz": 2637.02
+          }
+        ]
+      },
+      "tube_as_2": {
+        "middleTonic": {
+          "noteName": "C6",
+          "midi": 84,
+          "frequencyHz": 1046.5
+        },
+        "targets": [
+          {
+            "id": "low_2",
+            "label": "低音2",
+            "degree": 2,
+            "octaveShift": -1,
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
+          },
+          {
+            "id": "low_3",
+            "label": "低音3",
+            "degree": 3,
+            "octaveShift": -1,
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
+          },
+          {
+            "id": "low_4",
+            "label": "低音4",
+            "degree": 4,
+            "octaveShift": -1,
+            "noteName": "F5",
+            "midi": 77,
+            "frequencyHz": 698.46
+          },
+          {
+            "id": "low_5",
+            "label": "低音5",
+            "degree": 5,
+            "octaveShift": -1,
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
+          },
+          {
+            "id": "low_6",
+            "label": "低音6",
+            "degree": 6,
+            "octaveShift": -1,
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
+          },
+          {
+            "id": "low_7",
+            "label": "低音7",
+            "degree": 7,
+            "octaveShift": -1,
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
+          },
+          {
+            "id": "mid_1",
+            "label": "1",
+            "degree": 1,
+            "octaveShift": 0,
+            "noteName": "C6",
+            "midi": 84,
+            "frequencyHz": 1046.5
+          },
+          {
+            "id": "mid_2",
+            "label": "2",
+            "degree": 2,
+            "octaveShift": 0,
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
+          },
+          {
+            "id": "mid_3",
+            "label": "3",
+            "degree": 3,
+            "octaveShift": 0,
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
+          },
+          {
+            "id": "mid_4",
+            "label": "4",
+            "degree": 4,
+            "octaveShift": 0,
+            "noteName": "F6",
+            "midi": 89,
+            "frequencyHz": 1396.91
+          },
+          {
+            "id": "mid_5",
+            "label": "5",
+            "degree": 5,
+            "octaveShift": 0,
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
+          },
+          {
+            "id": "mid_6",
+            "label": "6",
+            "degree": 6,
+            "octaveShift": 0,
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
+          },
+          {
+            "id": "mid_7",
+            "label": "7",
+            "degree": 7,
+            "octaveShift": 0,
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
+          },
+          {
+            "id": "high_1",
+            "label": "高音1",
+            "degree": 1,
+            "octaveShift": 1,
+            "noteName": "C7",
+            "midi": 96,
+            "frequencyHz": 2093
+          },
+          {
+            "id": "high_2",
+            "label": "高音2",
+            "degree": 2,
+            "octaveShift": 1,
+            "noteName": "D7",
+            "midi": 98,
+            "frequencyHz": 2349.32
+          },
+          {
+            "id": "high_3",
+            "label": "高音3",
+            "degree": 3,
+            "octaveShift": 1,
+            "noteName": "E7",
+            "midi": 100,
+            "frequencyHz": 2637.02
           }
         ]
       },
       "tube_as_1": {
         "middleTonic": {
-          "noteName": "D4",
-          "midi": 62,
-          "frequencyHz": 293.66
+          "noteName": "D5",
+          "midi": 74,
+          "frequencyHz": 587.33
         },
         "targets": [
           {
@@ -2635,141 +2677,151 @@
             "label": "1",
             "degree": 1,
             "octaveShift": 0,
-            "noteName": "D4",
-            "midi": 62,
-            "frequencyHz": 293.66
+            "noteName": "D5",
+            "midi": 74,
+            "frequencyHz": 587.33
           },
           {
             "id": "mid_2",
             "label": "2",
             "degree": 2,
             "octaveShift": 0,
-            "noteName": "E4",
-            "midi": 64,
-            "frequencyHz": 329.63
+            "noteName": "E5",
+            "midi": 76,
+            "frequencyHz": 659.26
           },
           {
             "id": "mid_3",
             "label": "3",
             "degree": 3,
             "octaveShift": 0,
-            "noteName": "F#4",
-            "midi": 66,
-            "frequencyHz": 369.99
+            "noteName": "F#5",
+            "midi": 78,
+            "frequencyHz": 739.99
           },
           {
             "id": "mid_4",
             "label": "4",
             "degree": 4,
             "octaveShift": 0,
-            "noteName": "G4",
-            "midi": 67,
-            "frequencyHz": 392.0
+            "noteName": "G5",
+            "midi": 79,
+            "frequencyHz": 783.99
           },
           {
             "id": "mid_5",
             "label": "5",
             "degree": 5,
             "octaveShift": 0,
-            "noteName": "A4",
-            "midi": 69,
-            "frequencyHz": 440.0
+            "noteName": "A5",
+            "midi": 81,
+            "frequencyHz": 880
           },
           {
             "id": "mid_6",
             "label": "6",
             "degree": 6,
             "octaveShift": 0,
-            "noteName": "B4",
-            "midi": 71,
-            "frequencyHz": 493.88
+            "noteName": "B5",
+            "midi": 83,
+            "frequencyHz": 987.77
           },
           {
             "id": "mid_7",
             "label": "7",
             "degree": 7,
             "octaveShift": 0,
-            "noteName": "C#5",
-            "midi": 73,
-            "frequencyHz": 554.37
+            "noteName": "C#6",
+            "midi": 85,
+            "frequencyHz": 1108.73
           },
           {
             "id": "high_1",
             "label": "高音1",
             "degree": 1,
             "octaveShift": 1,
-            "noteName": "D5",
-            "midi": 74,
-            "frequencyHz": 587.33
+            "noteName": "D6",
+            "midi": 86,
+            "frequencyHz": 1174.66
           },
           {
             "id": "high_2",
             "label": "高音2",
             "degree": 2,
             "octaveShift": 1,
-            "noteName": "E5",
-            "midi": 76,
-            "frequencyHz": 659.26
+            "noteName": "E6",
+            "midi": 88,
+            "frequencyHz": 1318.51
           },
           {
             "id": "high_3",
             "label": "高音3",
             "degree": 3,
             "octaveShift": 1,
-            "noteName": "F#5",
-            "midi": 78,
-            "frequencyHz": 739.99
+            "noteName": "F#6",
+            "midi": 90,
+            "frequencyHz": 1479.98
           },
           {
             "id": "high_4",
             "label": "高音4",
             "degree": 4,
             "octaveShift": 1,
-            "noteName": "G5",
-            "midi": 79,
-            "frequencyHz": 783.99
+            "noteName": "G6",
+            "midi": 91,
+            "frequencyHz": 1567.98
           },
           {
             "id": "high_5",
             "label": "高音5",
             "degree": 5,
             "octaveShift": 1,
-            "noteName": "A5",
-            "midi": 81,
-            "frequencyHz": 880.0
+            "noteName": "A6",
+            "midi": 93,
+            "frequencyHz": 1760
           },
           {
             "id": "high_6",
             "label": "高音6",
             "degree": 6,
             "octaveShift": 1,
-            "noteName": "B5",
-            "midi": 83,
-            "frequencyHz": 987.77
+            "noteName": "B6",
+            "midi": 95,
+            "frequencyHz": 1975.53
           },
           {
             "id": "high_7",
             "label": "高音7",
             "degree": 7,
             "octaveShift": 1,
-            "noteName": "C#6",
-            "midi": 85,
-            "frequencyHz": 1108.73
+            "noteName": "C#7",
+            "midi": 97,
+            "frequencyHz": 2217.46
           },
           {
             "id": "double_high_1",
             "label": "倍高音1",
             "degree": 1,
             "octaveShift": 2,
-            "noteName": "D6",
-            "midi": 86,
-            "frequencyHz": 1174.66
+            "noteName": "D7",
+            "midi": 98,
+            "frequencyHz": 2349.32
+          },
+          {
+            "id": "double_high_2",
+            "label": "倍高音2",
+            "degree": 2,
+            "octaveShift": 2,
+            "noteName": "E7",
+            "midi": 100,
+            "frequencyHz": 2637.02
           }
         ]
       }
     }
   },
   "extensionNotes": [
+    "同一把笛子的物理音域上下界相同；筒音作5/2/1分别把筒音记作低音5、低音2、1。",
     "如果后续要支持 A/Bb 调笛，只需要在 diziKeys 中增加调性，并确保 majorScaleSpellings 覆盖对应主音。",
     "如果要支持半孔、叉口、替代指法，应在 target 上增加 fingering、difficulty、holes 字段，不建议混入音高计算逻辑。",
     "resolvedRanges 可以运行时动态生成；保留在配置中主要用于前端直接读取、调试和验收。"

@@ -23,23 +23,37 @@ describe('dizi target generation', () => {
     expect(midiToFreq(69)).toBeCloseTo(440, 6)
   })
 
-  it('builds the PRD D key target frequencies', () => {
+  it('builds D key tube-as-5 targets from the octave-5 dizi key basis', () => {
     const targets = buildDiziTargets('D')
 
     expect(targets.map((target) => target.label)).toEqual(
       jianpuRange.map((item) => item.label),
     )
+    expect(
+      targets.find((target) => target.label === '低音5')?.frequency,
+    ).toBeCloseTo(440, 2)
     expect(targets.find((target) => target.label === '1')?.frequency).toBeCloseTo(
-      293.66,
+      587.33,
       2,
     )
     expect(targets.find((target) => target.label === '5')?.frequency).toBeCloseTo(
-      440,
+      880,
       2,
     )
     expect(
       targets.find((target) => target.label === '高音1')?.frequency,
-    ).toBeCloseTo(587.33, 2)
+    ).toBeCloseTo(1174.66, 2)
+  })
+
+  it('uses B4 as the physical tube note for E key tube-as-5', () => {
+    const targets = buildDiziTargets({
+      diziKey: 'E',
+      fingeringProfileId: 'tube_as_5',
+    })
+
+    expect(
+      targets.find((target) => target.label === '低音5')?.frequency,
+    ).toBeCloseTo(493.88, 2)
   })
 
   it('supports the configured fingering profiles', () => {
@@ -86,16 +100,38 @@ describe('dizi target generation', () => {
       '高音3',
     ])
     expect(targets.find((target) => target.label === '低音2')?.frequency).toBeCloseTo(
-      220,
+      440,
+      2,
+    )
+    expect(targets.find((target) => target.label === '低音4')?.frequency).toBeCloseTo(
+      523.25,
+      2,
+    )
+    expect(targets.find((target) => target.label === '低音5')?.frequency).toBeCloseTo(
+      587.33,
       2,
     )
     expect(targets.find((target) => target.label === '1')?.frequency).toBeCloseTo(
-      392,
+      783.99,
       2,
     )
   })
 
-  it('builds D key tube-as-1 targets up to double high 1', () => {
+  it('maps E key tube-as-2 from the same B4 physical tube note', () => {
+    const targets = buildDiziTargets({
+      diziKey: 'E',
+      fingeringProfileId: 'tube_as_2',
+    })
+
+    expect(
+      targets.find((target) => target.label === '低音2')?.frequency,
+    ).toBeCloseTo(493.88, 2)
+    expect(
+      targets.find((target) => target.label === '低音5')?.frequency,
+    ).toBeCloseTo(659.26, 2)
+  })
+
+  it('builds D key tube-as-1 targets up to double high 2', () => {
     const targets = buildDiziTargets({
       diziKey: 'D',
       fingeringProfileId: 'tube_as_1',
@@ -117,13 +153,60 @@ describe('dizi target generation', () => {
       '高音6',
       '高音7',
       '倍高音1',
+      '倍高音2',
     ])
     expect(targets.find((target) => target.label === '1')?.frequency).toBeCloseTo(
-      220,
+      440,
       2,
     )
     expect(
       targets.find((target) => target.label === '倍高音1')?.frequency,
-    ).toBeCloseTo(880, 2)
+    ).toBeCloseTo(1760, 2)
+    expect(
+      targets.find((target) => target.label === '倍高音2')?.frequency,
+    ).toBeCloseTo(1975.53, 2)
+  })
+
+  it('maps E key tube-as-1 tonic to B4', () => {
+    const targets = buildDiziTargets({
+      diziKey: 'E',
+      fingeringProfileId: 'tube_as_1',
+    })
+
+    expect(targets.find((target) => target.label === '1')?.frequency).toBeCloseTo(
+      493.88,
+      2,
+    )
+  })
+
+  it('keeps the same low and high physical range for every fingering profile', () => {
+    const tubeAs5Targets = buildDiziTargets({
+      diziKey: 'E',
+      fingeringProfileId: 'tube_as_5',
+    })
+    const tubeAs2Targets = buildDiziTargets({
+      diziKey: 'E',
+      fingeringProfileId: 'tube_as_2',
+    })
+    const tubeAs1Targets = buildDiziTargets({
+      diziKey: 'E',
+      fingeringProfileId: 'tube_as_1',
+    })
+
+    expect(tubeAs5Targets).toHaveLength(16)
+    expect(tubeAs2Targets).toHaveLength(16)
+    expect(tubeAs1Targets).toHaveLength(16)
+    expect(tubeAs5Targets[0]).toMatchObject({ label: '低音5', midi: 71 })
+    expect(tubeAs2Targets[0]).toMatchObject({ label: '低音2', midi: 71 })
+    expect(tubeAs1Targets[0]).toMatchObject({ label: '1', midi: 71 })
+    expect(tubeAs2Targets.at(-1)?.midi).toBe(tubeAs5Targets.at(-1)?.midi)
+    expect(tubeAs1Targets.at(-1)?.midi).toBe(tubeAs5Targets.at(-1)?.midi)
+    expect(
+      tubeAs2Targets.find((target) => target.label === '低音5')?.frequency,
+    ).toBeCloseTo(659.26, 2)
+    expect(tubeAs2Targets.find((target) => target.label === '5')?.frequency).toBeCloseTo(
+      1318.51,
+      2,
+    )
   })
 })
