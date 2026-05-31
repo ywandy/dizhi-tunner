@@ -200,10 +200,10 @@ export default function App() {
     mode === 'target' ? selectedTarget?.frequency ?? null : averageResult?.frequency ?? null
 
   return (
-    <main className="min-h-dvh overflow-x-hidden bg-[var(--app-bg)] px-4 py-5 text-[var(--foreground)] sm:px-6 sm:py-8">
-      <div className="mx-auto flex min-h-[calc(100dvh-2.5rem)] w-full max-w-md flex-col">
-        <section className="tuner-shell flex flex-1 flex-col rounded-[2rem] border border-white/80 bg-[var(--panel)] px-5 py-6 shadow-panel sm:px-6">
-          <header className="mb-10 flex items-center justify-between gap-4">
+    <main className="h-dvh overflow-hidden bg-[var(--panel)] p-0 text-[var(--foreground)] sm:bg-[var(--app-bg)] sm:px-6 sm:py-8">
+      <div className="mx-auto flex h-full w-full max-w-none flex-col sm:min-h-[calc(100dvh-4rem)] sm:max-w-md">
+        <section className="tuner-shell flex h-full flex-1 flex-col overflow-x-hidden overflow-y-auto rounded-none border-0 bg-[var(--panel)] px-5 py-4 shadow-none sm:rounded-[2rem] sm:border sm:border-white/80 sm:px-6 sm:py-6">
+          <header className="mb-[clamp(1rem,4dvh,2.5rem)] flex items-center justify-between gap-4">
             <div className="min-w-0">
               <p className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted-foreground)]">
                 {summaryMode}
@@ -228,7 +228,7 @@ export default function App() {
             />
           </header>
 
-          <div className="flex flex-1 flex-col justify-center gap-9">
+          <div className="flex flex-1 flex-col justify-center gap-[clamp(1rem,4dvh,2.25rem)]">
             <ResultPanel
               averageFreq={averageFreq}
               isRunning={isRunning}
@@ -241,7 +241,7 @@ export default function App() {
             <TuningMeter cents={realtimeResult?.cents ?? null} />
           </div>
 
-          <div className="mt-9 space-y-3">
+          <div className="mt-[clamp(1rem,4dvh,2.25rem)] space-y-3 pb-[env(safe-area-inset-bottom)]">
             {error ? <Alert variant="destructive">{error}</Alert> : null}
             <StartStopButton
               isRunning={isRunning}

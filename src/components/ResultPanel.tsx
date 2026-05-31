@@ -54,22 +54,22 @@ export function ResultPanel({
       >
         {formatCents(cents) ? `${status} · ${formatCents(cents)}` : status}
       </div>
-      <dl className="mx-auto mt-9 grid w-full max-w-[21rem] grid-cols-3 gap-3 text-center">
+      <dl className="mx-auto mt-9 grid w-full max-w-[21rem] grid-cols-3 gap-1 text-center sm:gap-3">
         <div className="min-w-0">
           <dt className="text-xs text-[var(--muted-foreground)]">当前频率</dt>
-          <dd className="mt-1 text-lg font-bold text-[var(--foreground)] tabular-nums">
+          <dd className="frequency-readout mt-1 font-bold text-[var(--foreground)] tabular-nums">
             {formatFrequency(realtimeFreq)}
           </dd>
         </div>
-        <div className="min-w-0 border-x border-[var(--border)] px-2">
+        <div className="min-w-0 border-x border-[var(--border)] px-1 sm:px-2">
           <dt className="text-xs text-[var(--muted-foreground)]">平均频率</dt>
-          <dd className="mt-1 text-lg font-bold text-[var(--foreground)] tabular-nums">
+          <dd className="frequency-readout mt-1 font-bold text-[var(--foreground)] tabular-nums">
             {formatFrequency(averageFreq)}
           </dd>
         </div>
         <div className="min-w-0">
           <dt className="text-xs text-[var(--muted-foreground)]">目标频率</dt>
-          <dd className="mt-1 text-lg font-bold text-[var(--foreground)] tabular-nums">
+          <dd className="frequency-readout mt-1 font-bold text-[var(--foreground)] tabular-nums">
             {formatFrequency(targetFrequency)}
           </dd>
         </div>

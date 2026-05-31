@@ -34,7 +34,7 @@ const SheetContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed inset-x-0 bottom-0 z-50 max-h-[88dvh] rounded-t-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-panel focus:outline-none data-[state=closed]:animate-out data-[state=open]:animate-in sm:left-1/2 sm:max-w-md sm:-translate-x-1/2',
+        'fixed inset-x-0 bottom-0 z-50 max-h-[88dvh] overflow-y-auto rounded-t-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] shadow-panel focus:outline-none data-[state=closed]:animate-out data-[state=open]:animate-in sm:left-1/2 sm:max-w-md sm:-translate-x-1/2',
         className,
       )}
       {...props}
