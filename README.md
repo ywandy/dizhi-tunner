@@ -10,8 +10,8 @@
 
 ## 在线体验
 
-- GitHub Pages: [https://ywandy.github.io/dizhi-tunner/](https://ywandy.github.io/dizhi-tunner/)
-- 计划绑定域名: `https://ditune.ywandy.top/`
+- Cloudflare Pages: [https://ditune.ywandy.top/](https://ditune.ywandy.top/)
+- GitHub Pages 旧地址: [https://ywandy.github.io/dizhi-tunner/](https://ywandy.github.io/dizhi-tunner/)
 
 使用前请允许浏览器访问麦克风。建议在 Chrome、Edge 或 Safari 中打开。
 
@@ -31,7 +31,7 @@
 - Tailwind CSS + shadcn-style UI components
 - `pitchy` 音高检测
 - Vitest + Testing Library
-- GitHub Actions + GitHub Pages
+- GitHub Actions + Cloudflare Pages
 
 ## 本地开发
 
@@ -72,4 +72,4 @@ cents = 1200 * Math.log2(currentFreq / targetFreq)
 2. 运行测试
 3. 运行类型检查
 4. 构建静态产物
-5. 发布到 GitHub Pages
+5. 发布到 Cloudflare Pages

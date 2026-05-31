@@ -10,8 +10,8 @@ A mobile-first, browser-only dizi tuning tool. It uses the microphone to detect 
 
 ## Live Demo
 
-- GitHub Pages: [https://ywandy.github.io/dizhi-tunner/](https://ywandy.github.io/dizhi-tunner/)
-- Planned custom domain: `https://ditune.ywandy.top/`
+- Cloudflare Pages: [https://ditune.ywandy.top/](https://ditune.ywandy.top/)
+- Legacy GitHub Pages URL: [https://ywandy.github.io/dizhi-tunner/](https://ywandy.github.io/dizhi-tunner/)
 
 Allow microphone access before tuning. Chrome, Edge, or Safari is recommended.
 
@@ -31,7 +31,7 @@ Allow microphone access before tuning. Chrome, Edge, or Safari is recommended.
 - Tailwind CSS + shadcn-style UI components
 - `pitchy` for pitch detection
 - Vitest + Testing Library
-- GitHub Actions + GitHub Pages
+- GitHub Actions + Cloudflare Pages
 
 ## Local Development
 
@@ -72,4 +72,4 @@ After every push to `main`, GitHub Actions automatically:
 2. Runs tests
 3. Runs type checks
 4. Builds the static app
-5. Deploys to GitHub Pages
+5. Deploys to Cloudflare Pages
