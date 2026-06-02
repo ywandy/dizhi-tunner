@@ -2824,6 +2824,6 @@
     "同一把笛子的物理音域上下界相同；筒音作5/2/1分别把筒音记作低音5、低音2、1。",
     "如果后续要支持 A/Bb 调笛，只需要在 diziKeys 中增加调性，并确保 majorScaleSpellings 覆盖对应主音。",
     "如果要支持半孔、叉口、替代指法，应在 target 上增加 fingering、difficulty、holes 字段，不建议混入音高计算逻辑。",
-    "resolvedRanges 可以运行时动态生成；保留在配置中主要用于前端直接读取、调试和验收。"
+    "当前前端实现使用 src/core/dizi.ts 运行时动态生成 targets；resolvedRanges 保留在配置中主要用于 PRD 物料归档、调试、验收，以及后续配置驱动改造。"
   ]
 }

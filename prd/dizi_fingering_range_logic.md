@@ -2,7 +2,7 @@
 
 ## 1. 设计目标
 
-这个配置用于极简版“笛子音准测试 WebApp”。
+这个配置用于“笛子音准测试 WebApp”的当前版本。
 
 目标是支持：
 
@@ -86,7 +86,7 @@ D调笛在筒音作5时：
 
 ## 3.2 fingeringProfiles：指法体系配置
 
-第一版支持三个指法体系：
+当前支持三个指法体系：
 
 ```text
 tube_as_5 = 筒音作5
@@ -111,13 +111,15 @@ tube_as_1 = 筒音作1
 
 `resolvedRanges` 是根据 `diziKeys + fingeringProfiles` 预生成的结果。
 
-前端可以直接读取：
+如果后续改成配置驱动，前端可以直接读取：
 
 ```ts
 const targets = config.resolvedRanges[diziKey][fingeringProfileId].targets
 ```
 
 也可以只保留模板，在运行时动态生成。
+
+当前代码实现采用运行时动态生成：`src/core/dizi.ts` 内维护同样的调性、指法模板和算法，`prd/dizi_fingering_range_config.json` 作为 PRD 物料、算法验收和后续配置化依据。
 
 ---
 
@@ -453,12 +455,17 @@ function checkAgainstTarget(
 
 ## 8. UI 使用方式
 
-页面上增加一个“指法”选择器：
+当前 UI 将调音设置收纳到设置抽屉中：
 
 ```text
+当前模式 / 标题 / 当前笛子 + 指法
+[设置按钮]
+
+设置抽屉：
 笛子：[D调笛 ▼]
 指法：[筒音作5 ▼]
 模式：[实时检测] [指定音练习]
+目标音：[仅指定音练习显示]
 ```
 
 指法选项：
@@ -477,16 +484,29 @@ function checkAgainstTarget(
 清空当前检测结果
 ```
 
+切换指法后，如果原目标音不属于新指法的 targets，当前实现自动回退到 `1`。
+
 ---
 
 ## 9. 配置读取建议
 
-前端可以直接读取 JSON：
+当前前端实现使用 `src/core/dizi.ts` 运行时动态生成 targets：
+
+```ts
+function getTargets(
+  diziKey: DiziKey,
+  fingeringProfileId: FingeringProfileId
+) {
+  return buildDiziTargets({ diziKey, fingeringProfileId })
+}
+```
+
+如果后续要改成配置驱动，前端也可以直接读取 JSON：
 
 ```ts
 import config from './dizi_fingering_range_config.json'
 
-function getTargets(
+function getResolvedTargets(
   diziKey: string,
   fingeringProfileId: string
 ) {
@@ -494,7 +514,7 @@ function getTargets(
 }
 ```
 
-如果你希望减少 JSON 体积，也可以只保留：
+如果希望减少 JSON 体积，也可以只保留：
 
 ```text
 diziKeys
@@ -507,10 +527,10 @@ noteSystem
 当前 JSON 同时保留了模板和 resolvedRanges，适合：
 
 ```text
-1. 前端直接读取
+1. PRD 物料归档
 2. 开发调试
 3. 算法验收
-4. 后续改成动态生成
+4. 后续改成配置驱动
 ```
 
 ---

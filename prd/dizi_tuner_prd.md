@@ -1,460 +1,236 @@
 # 笛子音准测试 WebApp PRD
 
-## 1. 产品概述
+## 1. 当前产品状态
 
-### 1.1 产品名称
+### 1.1 产品定位
 
-笛子音准测试
+笛子音准测试是一个移动端优先的纯前端调音工具。用户选择笛子调性、筒音指法和检测模式后，通过浏览器麦克风实时识别音高，并用简谱、频率、cents 偏差和电平表判断当前音准。
 
-### 1.2 产品定位
+当前版本已经不是最初只支持“筒音作5”的 MVP；已完成三套筒音指法、设置面板、指定音练习、1 秒滚动平均频率、本地偏好保存和静态部署流程。
 
-一个极简的纯前端笛子音准测试工具。
+### 1.2 产品目标
 
-用户选择笛子调性后，通过麦克风实时检测当前吹奏音高，并用类似电平表的方式显示音准偏差。
+核心目标仍然保持简单：
 
-### 1.3 产品目标
+```text
+用户吹笛子时，快速知道当前音对应哪个简谱目标，以及它偏高、偏低还是基本准确。
+```
 
-第一版只解决一个问题：
+### 1.3 产品形态
 
-> 用户吹笛子时，快速知道当前音是偏高、偏低，还是基本准确。
-
-### 1.4 产品形态
-
-- 纯前端 WebApp
-- 移动端优先
-- 可部署为静态站点
-- 后续可扩展为 PWA
-- 暂不做登录、后端、云同步、历史记录、AI 分析
+- 纯前端 WebApp，无后端、无登录、无录音上传
+- 移动端优先，桌面端以居中调音面板呈现
+- 支持静态部署，当前 README 指向 Cloudflare Pages 和 GitHub Pages
+- 当前技术栈为 React + Vite + TypeScript + Tailwind CSS + pitchy
 
 ---
 
-## 2. 用户场景
+## 2. 已完成功能范围
 
-### 2.1 实时检测场景
-
-用户打开网页，选择笛子调性，例如 D 调笛，点击开始检测。
-
-用户随便吹一个音，系统自动判断当前音最接近哪一个简谱音，并显示偏差。
-
-示例：
-
-```text
-笛子：D 调笛
-模式：实时检测
-
-当前识别：5
-当前频率：438.6 Hz
-目标频率：440.0 Hz
-偏差：-5.5 cents
-结果：略低
-```
-
-### 2.2 指定音高练习场景
-
-用户选择笛子调性和目标音，例如 D 调笛的“5”。
-
-系统只判断当前吹奏音和目标音之间的偏差，不自动切换目标音。
-
-示例：
-
-```text
-笛子：D 调笛
-模式：指定音练习
-目标音：5
-
-当前频率：438.6 Hz
-目标频率：440.0 Hz
-偏差：-5.5 cents
-结果：略低
-```
-
----
-
-## 3. 产品范围
-
-### 3.1 第一版包含功能
-
-| 功能 | 是否包含 | 说明 |
+| 功能 | 当前状态 | 说明 |
 |---|---:|---|
-| 选择笛子调性 | 是 | 支持 C / D / E / F / G |
-| 实时音准检测 | 是 | 自动匹配最近音 |
-| 指定音高练习 | 是 | 用户选择目标音 |
-| 电平表显示偏差 | 是 | 显示 -50 到 +50 cents |
-| 当前频率显示 | 是 | 显示 Hz |
-| 目标频率显示 | 是 | 显示 Hz |
-| 偏差 cents 显示 | 是 | 正数偏高，负数偏低 |
-| 状态文案 | 是 | 很准 / 基本准 / 略高 / 略低 / 明显偏高 / 明显偏低 |
-| 麦克风授权 | 是 | 浏览器 getUserMedia |
-| 停止检测 | 是 | 释放麦克风资源 |
+| 选择笛子调性 | 已完成 | 支持 C / D / E / F / G |
+| 选择筒音指法 | 已完成 | 支持筒音作5 / 筒音作2 / 筒音作1 |
+| 实时检测 | 已完成 | 根据当前频率自动匹配最近目标音 |
+| 指定音练习 | 已完成 | 用户选择目标音后固定对比该目标 |
+| 电平表 | 已完成 | -50 到 +50 cents，实时指针平滑移动 |
+| 当前频率 | 已完成 | 显示最近一次有效 pitch |
+| 平均频率 | 已完成 | 显示最近 1 秒滚动平均 |
+| 目标频率 | 已完成 | 实时模式取平均匹配结果，指定模式取用户目标 |
+| 状态文案 | 已完成 | 很准 / 基本准 / 略高 / 略低 / 明显偏高 / 明显偏低 |
+| 麦克风启动/停止 | 已完成 | getUserMedia + Web Audio API，停止时释放资源 |
+| 浏览器兼容错误 | 已完成 | 不支持麦克风或 AudioContext 时给出提示 |
+| 麦克风授权错误 | 已完成 | 拒绝权限时给出提示 |
+| 本地偏好保存 | 已完成 | localStorage 保存调性、指法、模式、目标音 |
+| 旧偏好兼容 | 已完成 | 缺少指法字段时默认筒音作5 |
 
-### 3.2 第一版不包含功能
+当前不包含：
 
-| 功能 | 第一版是否做 |
+| 功能 | 当前状态 |
 |---|---:|
-| 用户登录 | 否 |
-| 后端服务 | 否 |
-| 历史记录 | 否 |
-| 长音评分 | 否 |
-| 练习报告 | 否 |
-| 指法图 | 否 |
-| 筒音作 2 / 筒音作 1 | 否 |
-| A4 = 442Hz 配置 | 否 |
-| AI 建议 | 否 |
-| 曲谱跟练 | 否 |
-| 教师端 | 否 |
-| 录音回放 | 否 |
+| 用户登录 / 后端服务 | 不做 |
+| 历史记录 / 练习报告 / 长音评分 | 不做 |
+| 指法图 / 半孔 / 叉口 / 替代指法 | 不做 |
+| A4 = 442Hz 等校音配置 | 暂不做，当前固定 A4 = 440Hz |
+| PWA 离线安装 | 暂不做 |
+| AI 建议 / 曲谱跟练 / 教师端 | 不做 |
+| 录音回放 / 音频上传 | 不做 |
 
 ---
 
-## 4. 核心设计原则
+## 3. 用户场景
 
-### 4.1 极简
+### 3.1 实时检测
 
-页面只做一个主功能页，不做复杂导航。
-
-### 4.2 即开即用
-
-用户进入页面后，只需要完成三步：
+用户打开页面，点击设置，选择调性和筒音指法，例如：
 
 ```text
-选择笛子调性
-点击开始检测
-吹奏笛子
+笛子：E 调笛
+指法：筒音作5
+模式：实时检测
 ```
 
-### 4.3 反馈直观
+用户吹奏任意一个音，系统使用当前频率驱动电平表，并使用最近 1 秒平均频率匹配目标音、显示目标频率和状态。
 
-核心反馈用电平表完成。
+示例：
 
 ```text
-偏低          准          偏高
--50  -25      0      +25  +50
-|-----|-------|-------|-----|
-              ▲
+当前识别：低音5
+当前频率：492.8 Hz
+平均频率：493.9 Hz
+目标频率：493.9 Hz
+偏差：0.0 cents
+结果：很准
 ```
 
-### 4.4 不追求教学系统
+### 3.2 指定音练习
 
-本产品不是乐器学习系统，只是音准测试工具。
+用户选择固定目标，例如：
+
+```text
+笛子：D 调笛
+指法：筒音作2
+模式：指定音练习
+目标音：低音5
+```
+
+系统始终以“D 调笛 · 筒音作2 · 低音5”的目标频率作为比较对象。即使用户吹到其他音，目标音也不会自动切换。
+
+### 3.3 停吹和无稳定音高
+
+当运行中超过约 600ms 没有新的有效 pitch：
+
+- 当前频率回到 `-- Hz`
+- 电平表回到中间
+- 最近稳定平均读数和状态文案保留，避免界面突然跳空
+
+点击停止检测后，当前频率、平均频率和结果全部清空，麦克风资源释放。
 
 ---
 
-## 5. 页面结构
+## 4. 核心配置和音高规则
 
-### 5.1 页面数量
+### 4.1 默认值
 
-第一版只有一个页面：
-
-```text
-/
-```
-
-页面名称：
-
-```text
-笛子音准测试
-```
-
-### 5.2 页面布局
-
-```text
-┌────────────────────────────┐
-│ 笛子音准测试                │
-│                            │
-│ 笛子调性                    │
-│ [D 调笛 ▼]                  │
-│                            │
-│ 检测模式                    │
-│ [实时检测] [指定音练习]      │
-│                            │
-│ 目标音                      │
-│ [5 ▼]                       │
-│ 仅指定音练习模式显示          │
-│                            │
-│ 当前音                      │
-│ 5                           │
-│                            │
-│ 当前频率                    │
-│ 438.6 Hz                    │
-│                            │
-│ 目标频率                    │
-│ 440.0 Hz                    │
-│                            │
-│ 偏差                        │
-│ -5.5 cents                  │
-│                            │
-│ -50   -25    0    +25   +50 │
-│ |------|------|------|------| │
-│              ▲              │
-│                            │
-│ 状态：略低                  │
-│                            │
-│ [开始检测] [停止]            │
-└────────────────────────────┘
-```
-
----
-
-## 6. 功能需求
-
-## 6.1 笛子调性选择
-
-### 6.1.1 功能说明
-
-用户可以选择当前使用的笛子调性。
-
-### 6.1.2 支持范围
-
-第一版支持：
-
-```text
-C 调笛
-D 调笛
-E 调笛
-F 调笛
-G 调笛
-```
-
-### 6.1.3 默认值
-
-默认选择：
-
-```text
-D 调笛
-```
-
-### 6.1.4 业务规则
-
-第一版固定为：
-
-```text
-筒音作 5
-A4 = 440Hz
-```
-
-不同调笛子的简谱 1 对应：
-
-| 笛子调性 | 简谱 1 |
+| 配置项 | 默认值 |
 |---|---|
-| C 调笛 | C4 |
-| D 调笛 | D4 |
-| E 调笛 | E4 |
-| F 调笛 | F4 |
-| G 调笛 | G4 |
+| 笛子调性 | D 调笛 |
+| 筒音指法 | 筒音作5 |
+| 检测模式 | 实时检测 |
+| 指定目标音 | 5 |
+| A4 | 440Hz |
+| baseOctave | 5 |
+| 电平表范围 | -50 ~ +50 cents |
+
+### 4.2 支持调性
+
+当前支持：
+
+```text
+C 调笛 / D 调笛 / E 调笛 / F 调笛 / G 调笛
+```
+
+调名表示“筒音作5时的中音 1”，且当前默认落在第 5 八度。例如：
+
+| 笛子调性 | 筒音作5的 1 | 物理筒音 / 低音5 |
+|---|---|---|
+| C 调笛 | C5 | G4 / 392.00Hz |
+| D 调笛 | D5 | A4 / 440.00Hz |
+| E 调笛 | E5 | B4 / 493.88Hz |
+| F 调笛 | F5 | C5 / 523.25Hz |
+| G 调笛 | G5 | D5 / 587.33Hz |
+
+这意味着旧 MVP 中“D 调笛的 5 = 440Hz”的描述已经不再作为当前规则使用；当前规则下 `D 调笛 · 筒音作5` 的 `低音5 = A4 / 440Hz`，`1 = D5 / 587.33Hz`，`5 = A5 / 880Hz`。
+
+### 4.3 支持指法体系
+
+| 指法 ID | UI 文案 | 筒音含义 | 目标范围 |
+|---|---|---|---|
+| `tube_as_5` | 筒音作5 | 筒音 = 低音5 | 低音5 到 高音6 |
+| `tube_as_2` | 筒音作2 | 筒音 = 低音2 | 低音2 到 高音3 |
+| `tube_as_1` | 筒音作1 | 筒音 = 1 | 1 到 倍高音2 |
+
+三套指法覆盖同一把笛子的同一段常用物理音域，只是简谱标签不同。以 D 调笛为例，三套指法的最低物理音都是 A4，最高目标都是 B6。
+
+### 4.4 PRD 配置物料
+
+`prd/dizi_fingering_range_config.json` 是当前音域配置物料，包含：
+
+- `defaults`：默认调性、指法、A4、baseOctave、电平表范围
+- `noteSystem`：MIDI、半音关系、大调拼写
+- `diziKeys`：C/D/E/F/G 调笛的筒音作5基准和物理筒音
+- `fingeringProfiles`：三套筒音指法的音域模板
+- `resolvedRanges`：按调性和指法展开后的目标音、MIDI、频率
+
+当前前端实现使用 `src/core/dizi.ts` 在运行时动态生成目标音；JSON 保留为 PRD 物料、算法验收和后续配置化依据。
 
 ---
 
-## 6.2 实时检测模式
+## 5. 算法与音频检测
 
-### 6.2.1 功能说明
+### 5.1 目标音生成
 
-用户吹任意一个音，系统自动查找当前频率最接近的目标音。
-
-### 6.2.2 输入
-
-- 当前麦克风检测频率 `currentFreq`
-- 当前笛子调性 `diziKey`
-
-### 6.2.3 输出
-
-- 当前识别的简谱音
-- 当前频率
-- 目标频率
-- 偏差 cents
-- 状态文案
-- 电平表指针位置
-
-### 6.2.4 匹配逻辑
+目标音生成流程：
 
 ```text
-1. 根据笛子调性生成目标音列表
-2. 当前频率与所有目标音频率计算 cents 差值
-3. 选择绝对值最小的目标音
-4. 显示该目标音和偏差
-```
-
-### 6.2.5 示例
-
-D 调笛目标音列表部分：
-
-| 简谱 | 目标频率 |
-|---|---:|
-| 低音5 | 220.00 Hz |
-| 低音6 | 246.94 Hz |
-| 低音7 | 277.18 Hz |
-| 1 | 293.66 Hz |
-| 2 | 329.63 Hz |
-| 3 | 369.99 Hz |
-| 4 | 392.00 Hz |
-| 5 | 440.00 Hz |
-| 6 | 493.88 Hz |
-| 7 | 554.37 Hz |
-| 高音1 | 587.33 Hz |
-
-如果检测到：
-
-```text
-currentFreq = 438.6 Hz
-```
-
-最近音为：
-
-```text
-5 / A4 / 440.00 Hz
-```
-
-偏差：
-
-```text
--5.5 cents
-```
-
----
-
-## 6.3 指定音高练习模式
-
-### 6.3.1 功能说明
-
-用户选择一个目标音，系统只对比当前频率与该目标音的偏差。
-
-### 6.3.2 输入
-
-- 当前笛子调性 `diziKey`
-- 目标音 `targetLabel`
-- 当前检测频率 `currentFreq`
-
-### 6.3.3 输出
-
-- 目标简谱音
-- 当前频率
-- 目标频率
-- 偏差 cents
-- 状态文案
-- 电平表指针位置
-
-### 6.3.4 业务规则
-
-在指定音高练习模式下：
-
-```text
-即使用户吹到其他音，系统也不自动切换目标音。
-```
-
-例如用户选择目标音 `5`，系统始终以 `5` 的频率作为目标频率进行比较。
-
----
-
-## 6.4 目标音选择
-
-### 6.4.1 显示条件
-
-仅在指定音高练习模式下显示。
-
-### 6.4.2 可选范围
-
-第一版目标音范围：
-
-```text
-低音5
-低音6
-低音7
-1
-2
-3
-4
-5
-6
-7
-高音1
-高音2
-高音3
-高音4
-高音5
-```
-
-### 6.4.3 默认值
-
-默认目标音：
-
-```text
-5
-```
-
----
-
-## 6.5 麦克风检测
-
-### 6.5.1 功能说明
-
-用户点击开始检测后，浏览器请求麦克风权限。
-
-### 6.5.2 权限规则
-
-用户必须主动点击按钮后才能启动麦克风。
-
-```text
-点击开始检测
+笛子调性
   ↓
-请求麦克风权限
+筒音作5时的中音1，默认第 5 八度
   ↓
-授权成功
+计算物理筒音
   ↓
-开始检测
+根据当前筒音指法计算当前体系的中音1
+  ↓
+套用该指法的 rangeTemplate
+  ↓
+生成 label / midi / frequency
 ```
 
-### 6.5.3 授权失败
+频率公式：
 
-如果用户拒绝授权，显示：
+```ts
+frequency = a4 * 2 ** ((midi - 69) / 12)
+```
+
+cents 公式：
+
+```ts
+cents = 1200 * Math.log2(currentFreq / targetFreq)
+```
+
+### 5.2 实时检测匹配
+
+实时检测模式下：
 
 ```text
-无法访问麦克风，请允许浏览器使用麦克风后重试。
+有效 pitch
+  ↓
+写入 1 秒滚动窗口
+  ↓
+当前频率驱动电平表
+  ↓
+平均频率匹配最近目标音
+  ↓
+显示目标音、目标频率、偏差和状态
 ```
 
-### 6.5.4 停止检测
+匹配规则是遍历当前调性和指法下的 targets，选择 `abs(cents)` 最小的目标。
 
-用户点击停止后：
+### 5.3 指定音练习
+
+指定音练习模式下：
 
 ```text
-1. 停止所有 MediaStreamTrack
-2. 关闭 AudioContext
-3. UI 回到未检测状态
+用户选择目标音
+  ↓
+从当前调性 + 指法 targets 中找到目标
+  ↓
+有效 pitch / 平均频率只和该目标比较
 ```
 
----
+切换指法时，如果已保存目标音不存在于新指法的目标范围，目标音自动回退为 `1`。
 
-## 6.6 电平表
-
-### 6.6.1 功能说明
-
-电平表用于显示当前音准偏差。
-
-### 6.6.2 显示范围
-
-```text
--50 cents ~ +50 cents
-```
-
-### 6.6.3 指针位置
-
-- `0 cents` 位于中间
-- 负数偏左，表示偏低
-- 正数偏右，表示偏高
-- 小于 `-50 cents` 时贴左边
-- 大于 `+50 cents` 时贴右边
-
-### 6.6.4 显示示例
-
-```text
--50        -25         0        +25        +50
-|-----------|----------|----------|----------|
-                       ▲
-```
-
----
-
-## 6.7 状态文案
-
-### 6.7.1 判断规则
+### 5.4 状态文案
 
 | cents 绝对值 | 文案 |
 |---:|---|
@@ -463,987 +239,207 @@ currentFreq = 438.6 Hz
 | `<= 20` | 略高 / 略低 |
 | `> 20` | 明显偏高 / 明显偏低 |
 
-### 6.7.2 偏高偏低规则
+方向规则：
 
 ```text
 cents > 0：偏高
 cents < 0：偏低
-cents = 0：准确
+abs(cents) <= 5：视为居中
 ```
+
+### 5.5 麦克风和 pitch 过滤
+
+当前音频实现：
+
+- 用户点击“开始检测”后才请求麦克风权限
+- `getUserMedia` 关闭 `echoCancellation`、`noiseSuppression`、`autoGainControl`
+- 支持标准 `AudioContext` 和 Safari 的 `webkitAudioContext`
+- `AnalyserNode.fftSize = 2048`
+- 使用 `pitchy` 检测 pitch
+- 只接受 `80Hz ~ 3000Hz` 且 `clarity >= 0.85` 的结果
+- 点击停止时取消动画帧、断开 source、停止 MediaStreamTrack，并关闭 AudioContext
 
 ---
 
-## 7. 算法设计
+## 6. UI 和交互
 
-## 7.1 总体算法流程
+### 6.1 页面结构
+
+当前只有一个页面：
 
 ```text
-麦克风输入
-  ↓
-Web Audio API 获取音频 buffer
-  ↓
-Pitch Detection 得到 currentFreq
-  ↓
-根据当前笛子调性生成目标音列表
-  ↓
-根据模式计算目标音
-  ↓
-计算 cents 偏差
-  ↓
-计算电平表位置
-  ↓
-显示结果
+/
 ```
 
----
-
-## 7.2 音准偏差公式
-
-```ts
-function centsDiff(currentFreq: number, targetFreq: number): number {
-  return 1200 * Math.log2(currentFreq / targetFreq)
-}
-```
-
-含义：
+页面由一个调音面板组成：
 
 ```text
-currentFreq > targetFreq：cents 为正，偏高
-currentFreq < targetFreq：cents 为负，偏低
+顶部：当前模式摘要、标题、当前笛子调性 + 指法、设置按钮
+主体：大号简谱识别、状态胶囊、当前/平均/目标频率、电平表
+底部：错误提示、开始/停止检测按钮
 ```
 
----
-
-## 7.3 MIDI 与频率转换
-
-### 7.3.1 MIDI 转频率
-
-```ts
-function midiToFreq(midi: number, a4 = 440): number {
-  return a4 * Math.pow(2, (midi - 69) / 12)
-}
-```
-
-### 7.3.2 音名转 MIDI
-
-```ts
-const NOTE_TO_SEMITONE: Record<string, number> = {
-  C: 0,
-  'C#': 1,
-  D: 2,
-  'D#': 3,
-  E: 4,
-  F: 5,
-  'F#': 6,
-  G: 7,
-  'G#': 8,
-  A: 9,
-  'A#': 10,
-  B: 11,
-}
-
-function noteToMidi(note: string, octave: number): number {
-  return (octave + 1) * 12 + NOTE_TO_SEMITONE[note]
-}
-```
-
----
-
-## 7.4 简谱音阶关系
-
-第一版固定为大调音阶关系：
-
-```ts
-type Degree = 1 | 2 | 3 | 4 | 5 | 6 | 7
-
-const MAJOR_SCALE: Record<Degree, number> = {
-  1: 0,
-  2: 2,
-  3: 4,
-  4: 5,
-  5: 7,
-  6: 9,
-  7: 11,
-}
-```
-
----
-
-## 7.5 目标音范围
-
-```ts
-const JIANPU_RANGE = [
-  { label: '低音5', degree: 5, octaveShift: -1 },
-  { label: '低音6', degree: 6, octaveShift: -1 },
-  { label: '低音7', degree: 7, octaveShift: -1 },
-
-  { label: '1', degree: 1, octaveShift: 0 },
-  { label: '2', degree: 2, octaveShift: 0 },
-  { label: '3', degree: 3, octaveShift: 0 },
-  { label: '4', degree: 4, octaveShift: 0 },
-  { label: '5', degree: 5, octaveShift: 0 },
-  { label: '6', degree: 6, octaveShift: 0 },
-  { label: '7', degree: 7, octaveShift: 0 },
-
-  { label: '高音1', degree: 1, octaveShift: 1 },
-  { label: '高音2', degree: 2, octaveShift: 1 },
-  { label: '高音3', degree: 3, octaveShift: 1 },
-  { label: '高音4', degree: 4, octaveShift: 1 },
-  { label: '高音5', degree: 5, octaveShift: 1 },
-] as const
-```
-
----
-
-## 7.6 构建笛子目标音列表
-
-```ts
-type DiziKey = 'C' | 'D' | 'E' | 'F' | 'G'
-
-function buildDiziTargets(key: DiziKey) {
-  const baseOctave = 4
-  const tonicMidi = noteToMidi(key, baseOctave)
-
-  return JIANPU_RANGE.map(item => {
-    const midi =
-      tonicMidi +
-      MAJOR_SCALE[item.degree] +
-      item.octaveShift * 12
-
-    return {
-      label: item.label,
-      midi,
-      frequency: midiToFreq(midi),
-    }
-  })
-}
-```
-
----
-
-## 7.7 实时检测匹配算法
-
-```ts
-function findNearestTarget(
-  currentFreq: number,
-  targets: Array<{
-    label: string
-    midi: number
-    frequency: number
-  }>
-) {
-  let best:
-    | {
-        label: string
-        midi: number
-        frequency: number
-        cents: number
-      }
-    | null = null
-
-  for (const target of targets) {
-    const cents = centsDiff(currentFreq, target.frequency)
-
-    if (!best || Math.abs(cents) < Math.abs(best.cents)) {
-      best = {
-        ...target,
-        cents,
-      }
-    }
-  }
-
-  return best
-}
-```
-
----
-
-## 7.8 指定音练习算法
-
-```ts
-function checkAgainstTarget(
-  currentFreq: number,
-  target: {
-    label: string
-    midi: number
-    frequency: number
-  }
-) {
-  return {
-    ...target,
-    cents: centsDiff(currentFreq, target.frequency),
-  }
-}
-```
-
----
-
-## 7.9 电平表位置算法
-
-```ts
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value))
-}
-
-function centsToMeterPercent(cents: number) {
-  const clamped = clamp(cents, -50, 50)
-  return ((clamped + 50) / 100) * 100
-}
-```
-
-映射关系：
-
-| cents | 指针位置 |
-|---:|---:|
-| -50 | 0% |
-| -25 | 25% |
-| 0 | 50% |
-| +25 | 75% |
-| +50 | 100% |
-
----
-
-## 8. 音频检测设计
-
-## 8.1 技术方案
-
-使用：
+设置通过抽屉面板完成：
 
 ```text
-Web Audio API + pitchy
+笛子调性
+指法
+检测模式
+目标音（仅指定音练习模式显示）
+完成
 ```
 
-### 8.1.1 依赖
+### 6.2 电平表
 
-```bash
-pnpm add pitchy
-```
-
-### 8.1.2 麦克风配置
-
-```ts
-const stream = await navigator.mediaDevices.getUserMedia({
-  audio: {
-    echoCancellation: false,
-    noiseSuppression: false,
-    autoGainControl: false,
-  },
-})
-```
-
-说明：
-
-| 参数 | 原因 |
-|---|---|
-| echoCancellation: false | 避免回声消除影响音频 |
-| noiseSuppression: false | 避免降噪影响频率 |
-| autoGainControl: false | 避免自动增益导致不稳定 |
-
----
-
-## 8.2 Pitch 检测逻辑
-
-```ts
-import { PitchDetector } from 'pitchy'
-
-async function startTuner(onPitch: (frequency: number) => void) {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: {
-      echoCancellation: false,
-      noiseSuppression: false,
-      autoGainControl: false,
-    },
-  })
-
-  const audioContext = new AudioContext()
-  const source = audioContext.createMediaStreamSource(stream)
-
-  const analyser = audioContext.createAnalyser()
-  analyser.fftSize = 2048
-  analyser.smoothingTimeConstant = 0
-
-  source.connect(analyser)
-
-  const detector = PitchDetector.forFloat32Array(analyser.fftSize)
-  const buffer = new Float32Array(analyser.fftSize)
-
-  let stopped = false
-
-  function tick() {
-    if (stopped) return
-
-    analyser.getFloatTimeDomainData(buffer)
-
-    const [pitch, clarity] = detector.findPitch(
-      buffer,
-      audioContext.sampleRate
-    )
-
-    if (
-      Number.isFinite(pitch) &&
-      pitch >= 80 &&
-      pitch <= 2000 &&
-      clarity >= 0.85
-    ) {
-      onPitch(pitch)
-    }
-
-    requestAnimationFrame(tick)
-  }
-
-  tick()
-
-  return {
-    stop() {
-      stopped = true
-      stream.getTracks().forEach(track => track.stop())
-      audioContext.close()
-    },
-  }
-}
-```
-
----
-
-## 8.3 有效频率范围
-
-第一版只处理：
+电平表显示范围固定为：
 
 ```text
-80Hz ~ 2000Hz
+-50 cents ~ +50 cents
 ```
 
-低于或高于该范围的数据忽略。
+显示规则：
 
----
+- `0 cents` 在中间
+- 负数偏左，表示偏低
+- 正数偏右，表示偏高
+- 小于 `-50` 贴左边，大于 `+50` 贴右边
+- 指针有阻尼动画，开启系统“减少动态效果”时直接跳到目标位置
 
-## 8.4 置信度过滤
+### 6.3 本地偏好
 
-第一版使用 pitchy 返回的 clarity。
-
-```text
-clarity >= 0.85 才认为有效
-```
-
-低于该值时，不更新当前结果。
-
----
-
-## 9. 状态管理设计
-
-## 9.1 页面状态
+使用 localStorage 保存：
 
 ```ts
-type Mode = 'realtime' | 'target'
-type DiziKey = 'C' | 'D' | 'E' | 'F' | 'G'
-
-type AppState = {
-  diziKey: DiziKey
-  mode: Mode
+type AppPreferences = {
+  diziKey: 'C' | 'D' | 'E' | 'F' | 'G'
+  fingeringProfileId: 'tube_as_5' | 'tube_as_2' | 'tube_as_1'
+  mode: 'realtime' | 'target'
   targetLabel: string
-
-  isRunning: boolean
-  currentFreq: number | null
-
-  result: {
-    label: string
-    frequency: number
-    cents: number
-  } | null
-
-  error: string | null
 }
 ```
 
----
-
-## 9.2 状态默认值
-
-```ts
-const defaultState: AppState = {
-  diziKey: 'D',
-  mode: 'realtime',
-  targetLabel: '5',
-
-  isRunning: false,
-  currentFreq: null,
-  result: null,
-  error: null,
-}
-```
-
----
-
-## 9.3 检测结果处理
-
-```ts
-function handlePitch(freq: number) {
-  const targets = buildDiziTargets(state.diziKey)
-
-  if (state.mode === 'realtime') {
-    const result = findNearestTarget(freq, targets)
-    setState({
-      currentFreq: freq,
-      result,
-    })
-    return
-  }
-
-  const target = targets.find(t => t.label === state.targetLabel)
-
-  if (!target) return
-
-  const result = checkAgainstTarget(freq, target)
-
-  setState({
-    currentFreq: freq,
-    result,
-  })
-}
-```
-
----
-
-## 10. UI 组件设计
-
-## 10.1 组件列表
+存储 key：
 
 ```text
-App
-DiziSelector
-ModeSwitch
-TargetSelector
-TuningMeter
-ResultPanel
-StartStopButton
+dizi-tuner-preferences-v1
 ```
+
+解析规则：
+
+- 缺少 `fingeringProfileId` 的旧偏好按 `tube_as_5` 处理
+- 非法调性、模式、指法或目标音回退默认值
+- 保存的目标音不属于当前指法时回退到 `1`
+- 存储失败不影响调音主流程
 
 ---
 
-## 10.2 DiziSelector
+## 7. 异常和兼容性
 
-### 功能
+### 7.1 错误提示
 
-选择笛子调性。
-
-### Props
-
-```ts
-type DiziSelectorProps = {
-  value: DiziKey
-  onChange: (value: DiziKey) => void
-}
-```
-
-### 选项
-
-```text
-C 调笛
-D 调笛
-E 调笛
-F 调笛
-G 调笛
-```
-
----
-
-## 10.3 ModeSwitch
-
-### 功能
-
-切换检测模式。
-
-### Props
-
-```ts
-type ModeSwitchProps = {
-  value: 'realtime' | 'target'
-  onChange: (value: 'realtime' | 'target') => void
-}
-```
-
-### 选项
-
-```text
-实时检测
-指定音练习
-```
-
----
-
-## 10.4 TargetSelector
-
-### 功能
-
-选择指定练习目标音。
-
-### 显示条件
-
-```text
-mode === 'target'
-```
-
-### Props
-
-```ts
-type TargetSelectorProps = {
-  value: string
-  targets: Array<{
-    label: string
-    frequency: number
-  }>
-  onChange: (label: string) => void
-}
-```
-
----
-
-## 10.5 TuningMeter
-
-### 功能
-
-显示音准偏差。
-
-### Props
-
-```ts
-type TuningMeterProps = {
-  cents: number | null
-}
-```
-
-### 显示状态
-
-未检测到有效音高：
-
-```text
-等待吹奏
-```
-
-检测到有效音高：
-
-```text
--50   -25    0    +25   +50
-|------|------|------|------|
-              ▲
-```
-
----
-
-## 10.6 ResultPanel
-
-### 功能
-
-展示检测结果。
-
-### 内容
-
-```text
-当前音 / 目标音
-当前频率
-目标频率
-偏差 cents
-状态文案
-```
-
-### 示例
-
-```text
-当前音：5
-当前频率：438.6 Hz
-目标频率：440.0 Hz
-偏差：-5.5 cents
-状态：略低
-```
-
----
-
-## 10.7 StartStopButton
-
-### 功能
-
-开始或停止检测。
-
-### 状态
-
-| 当前状态 | 按钮文案 |
+| 场景 | 提示 |
 |---|---|
-| 未运行 | 开始检测 |
-| 运行中 | 停止检测 |
+| 用户拒绝麦克风权限 | 无法访问麦克风，请允许浏览器使用麦克风后重试。 |
+| 不支持 getUserMedia 或 AudioContext | 当前浏览器不支持麦克风检测，请使用 Chrome、Edge 或 Safari 浏览器。 |
+| 其他启动失败 | 麦克风启动失败，请检查浏览器权限后重试。 |
+
+### 7.2 支持目标
+
+优先支持：
+
+- Chrome Desktop
+- Edge Desktop
+- Android Chrome
+- iOS Safari
+
+暂不重点支持：
+
+- 微信内置浏览器
+- 老旧 Android 浏览器
+- 后台持续检测
 
 ---
 
-## 11. 视觉设计要求
+## 8. 验收标准
 
-## 11.1 整体风格
-
-- 极简
-- 工具感
-- 类似调音器/电平表
-- 移动端优先
-- 避免复杂装饰
-
-## 11.2 页面层级
-
-信息优先级：
-
-```text
-1. 电平表
-2. 偏差状态
-3. 当前音 / 目标音
-4. 当前频率 / 目标频率
-5. 配置项
-```
-
-## 11.3 色彩建议
-
-| 状态 | 颜色建议 |
-|---|---|
-| 很准 | 绿色 |
-| 基本准 | 浅绿色 |
-| 略高 / 略低 | 黄色 / 橙色 |
-| 明显偏高 / 明显偏低 | 红色 |
-| 未检测 | 灰色 |
-
-## 11.4 电平表样式
-
-建议用横向条形表：
-
-```text
-偏低                         偏高
--50      -25       0       +25      +50
-|---------|--------|--------|---------|
-                    ▲
-```
-
----
-
-## 12. 技术架构
-
-## 12.1 技术栈
-
-```text
-React
-Vite
-TypeScript
-Web Audio API
-pitchy
-CSS / Tailwind CSS
-```
-
-### 可选
-
-```text
-Zustand
-```
-
-第一版状态较少，可以直接用 React useState，不强制引入状态管理库。
-
----
-
-## 12.2 项目结构
-
-```text
-src/
-  App.tsx
-  main.tsx
-
-  core/
-    audio.ts
-    dizi.ts
-    pitch.ts
-    tuning.ts
-
-  components/
-    DiziSelector.tsx
-    ModeSwitch.tsx
-    TargetSelector.tsx
-    TuningMeter.tsx
-    ResultPanel.tsx
-    StartStopButton.tsx
-
-  styles/
-    global.css
-```
-
----
-
-## 12.3 核心模块职责
-
-| 模块 | 职责 |
-|---|---|
-| audio.ts | 麦克风启动、停止、音频 buffer 获取 |
-| pitch.ts | pitchy 封装 |
-| dizi.ts | 笛子调性、目标音频率表 |
-| tuning.ts | cents 计算、电平表映射、状态判断 |
-| App.tsx | 页面状态和业务流转 |
-| TuningMeter.tsx | 电平表 UI |
-
----
-
-## 13. 异常处理
-
-## 13.1 麦克风权限被拒绝
-
-显示：
-
-```text
-无法访问麦克风，请允许浏览器使用麦克风后重试。
-```
-
-## 13.2 浏览器不支持 getUserMedia
-
-显示：
-
-```text
-当前浏览器不支持麦克风检测，请使用 Chrome、Edge 或 Safari 浏览器。
-```
-
-## 13.3 长时间无有效音高
-
-显示：
-
-```text
-等待吹奏...
-```
-
-或者：
-
-```text
-未检测到稳定音高
-```
-
-## 13.4 音量太小 / 环境噪声
-
-第一版不单独判断音量，仅依赖 pitch clarity 过滤。
-
-后续可增加 RMS 音量判断。
-
----
-
-## 14. 兼容性要求
-
-## 14.1 首选支持
-
-| 平台 | 要求 |
-|---|---|
-| Chrome Desktop | 支持 |
-| Edge Desktop | 支持 |
-| Android Chrome | 支持 |
-| iOS Safari | 尽量支持 |
-
-## 14.2 暂不重点支持
-
-| 平台 | 原因 |
-|---|---|
-| 微信内置浏览器 | 麦克风和音频上下文限制较多 |
-| 老旧 Android 浏览器 | Web Audio 支持不稳定 |
-| 后台运行 | Web 页面后台会被暂停 |
-
----
-
-## 15. 部署方案
-
-## 15.1 第一版部署
-
-使用静态部署：
-
-```text
-Cloudflare Pages
-Vercel
-Netlify
-GitHub Pages
-```
-
-推荐：
-
-```text
-Cloudflare Pages
-```
-
-## 15.2 构建命令
-
-```bash
-pnpm install
-pnpm build
-```
-
-## 15.3 产物目录
-
-```text
-dist/
-```
-
----
-
-## 16. 验收标准
-
-## 16.1 基础功能验收
+### 8.1 产品验收
 
 | 验收项 | 标准 |
 |---|---|
-| 可选择笛子调性 | C/D/E/F/G 可选 |
-| 可启动麦克风 | 点击开始后请求权限 |
-| 可停止检测 | 点击停止后释放麦克风 |
-| 实时检测可用 | 吹奏后显示最近音 |
-| 指定音练习可用 | 只对比选中的目标音 |
-| 偏差计算正确 | cents 计算符合公式 |
-| 电平表正常 | 指针随 cents 左右移动 |
-| 状态文案正确 | 根据 cents 显示偏高/偏低 |
-| 移动端可用 | 手机浏览器布局正常 |
+| 调性选择 | C/D/E/F/G 都可选 |
+| 指法选择 | 筒音作5/2/1 都可选 |
+| 实时检测 | 有效吹奏后显示最近目标音、频率、偏差和状态 |
+| 指定音练习 | 固定对比用户选择目标音，不自动切换 |
+| D 调笛筒音作5 | 低音5 为 A4 / 440Hz，1 为 D5 / 587.33Hz |
+| E 调笛筒音作5 | 低音5 为 B4 / 493.88Hz |
+| E 调笛筒音作2 | 低音5 为 E5 / 659.26Hz |
+| D 调笛筒音作1 | 1 为 A4 / 440Hz，倍高音2 为 B6 / 1975.53Hz |
+| 电平表 | cents 映射到 -50~+50，超出范围夹紧 |
+| 停止检测 | 释放麦克风并清空读数 |
+| 偏好恢复 | 刷新后恢复调性、指法、模式、目标音 |
+
+### 8.2 技术验收
+
+当前已通过：
+
+```bash
+pnpm test
+pnpm typecheck
+```
+
+截至本次 PRD 更新，测试结果为：
+
+```text
+7 个测试文件通过
+34 个测试用例通过
+TypeScript typecheck 通过
+```
+
+覆盖重点：
+
+- 调性、MIDI、频率换算
+- 三套筒音指法目标音生成
+- 同一物理音域的不同简谱标签
+- cents、状态文案、电平表百分比
+- pitch 过滤支持 2000Hz 以上高音目标，当前上限为 3000Hz
+- 1 秒滚动平均
+- 设置面板、目标音显示、本地偏好恢复
+- 无有效 pitch 后实时读数清空和稳定读数保留
 
 ---
 
-## 16.2 算法验收
+## 9. 后续可选迭代
 
-### D 调笛目标频率
+后续如果继续扩展，建议按优先级拆分：
 
-第一版 D 调笛，筒音作 5，A4 = 440，应生成：
-
-| 简谱 | 频率 |
-|---|---:|
-| 1 | 293.66 Hz |
-| 2 | 329.63 Hz |
-| 3 | 369.99 Hz |
-| 4 | 392.00 Hz |
-| 5 | 440.00 Hz |
-| 6 | 493.88 Hz |
-| 7 | 554.37 Hz |
-| 高音1 | 587.33 Hz |
-
-### cents 验收
-
-输入：
-
-```text
-currentFreq = 440
-targetFreq = 440
-```
-
-输出：
-
-```text
-0 cents
-```
-
-输入：
-
-```text
-currentFreq = 438.6
-targetFreq = 440
-```
-
-输出约：
-
-```text
--5.5 cents
-```
+1. 支持 A / Bb 调笛
+2. 增加 A4 = 442Hz 等校音配置
+3. 增加 RMS 音量提示，区分“没吹”和“音量太小”
+4. 增加 PWA 离线安装
+5. 增加长音稳定度评分
+6. 增加本地练习记录
+7. 增加物理指法图，但不要混入当前音高计算模型
 
 ---
 
-## 17. MVP 开发任务拆分
+## 10. 结论
 
-### 17.1 初始化项目
-
-```text
-1. 创建 Vite React TS 项目
-2. 安装 pitchy
-3. 建立 core 和 components 目录
-```
-
-### 17.2 实现算法模块
+当前版本的产品闭环是：
 
 ```text
-1. 实现 noteToMidi
-2. 实现 midiToFreq
-3. 实现 buildDiziTargets
-4. 实现 centsDiff
-5. 实现 findNearestTarget
-6. 实现 centsToMeterPercent
-7. 实现 getStatusText
-```
-
-### 17.3 实现音频模块
-
-```text
-1. 请求麦克风权限
-2. 创建 AudioContext
-3. 创建 AnalyserNode
-4. 接入 pitchy
-5. 过滤无效 pitch
-6. 提供 start / stop 方法
-```
-
-### 17.4 实现 UI
-
-```text
-1. 笛子选择器
-2. 模式切换
-3. 目标音选择器
-4. 电平表
-5. 结果展示
-6. 开始 / 停止按钮
-```
-
-### 17.5 联调
-
-```text
-1. 选择 D 调笛
-2. 进入实时检测
-3. 吹奏接近 A4 的音
-4. 系统识别为 5
-5. 显示偏差
-6. 切换指定音练习
-7. 选择目标音 5
-8. 系统固定对比 A4
-```
-
----
-
-## 18. 后续可选迭代
-
-第一版完成后，如果效果稳定，再考虑：
-
-```text
-1. 支持 A4 = 442Hz
-2. 支持筒音作 2 / 筒音作 1
-3. 支持 Bb / A 调笛
-4. 支持 PWA 离线
-5. 增加 RMS 音量检测
-6. 增加指针平滑
-7. 增加长音稳定度
-8. 增加本地练习记录
-```
-
----
-
-## 19. 第一版结论
-
-第一版产品只做：
-
-```text
-选笛子
-实时检测
-指定音练习
-电平表显示偏差
-```
-
-不做复杂配置，不做后端，不做学习系统。
-
-核心闭环：
-
-```text
-用户选择 D 调笛
+选择笛子调性和筒音指法
+  ↓
+选择实时检测或指定音练习
   ↓
 点击开始检测
   ↓
-吹奏
+吹奏笛子
   ↓
-系统检测当前频率
+系统识别 pitch 并生成当前/平均频率
   ↓
-计算目标音偏差
+按当前调性 + 指法匹配目标音
   ↓
-电平表显示偏高 / 偏低 / 准
+用简谱、频率、cents、状态和电平表反馈音准
 ```
 
-这是一个可以快速实现、快速验证的小工具型 WebApp。
+PRD、指法逻辑和配置物料应以这个闭环作为当前事实源。
