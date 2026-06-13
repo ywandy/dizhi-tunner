@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Mic, SlidersHorizontal } from 'lucide-react'
+import { BookOpen, Mic, SlidersHorizontal } from 'lucide-react'
 
 import { ModeTopTabs } from './components/ModeTopTabs'
 import { SettingsPanel } from './components/SettingsPanel'
@@ -8,6 +8,13 @@ import { StartStopButton } from './components/StartStopButton'
 import { TuningMeter } from './components/TuningMeter'
 import { ResultPanel } from './components/ResultPanel'
 import { Alert } from './components/ui/alert'
+import {
+  HoleScoreHome,
+  JianpuHoleScoreEditor,
+  type ManualHoleScoreDraft,
+  ManualHoleScoreEditor,
+  NewHoleScorePage,
+} from './pages/HoleScorePages'
 import {
   buildDiziTargets,
   getFingeringProfileLabel,
@@ -29,6 +36,7 @@ import {
   type Mode,
   type TuningResult,
 } from './core/tuning'
+import type { SavedScore } from './core/score/scoreTypes'
 
 function getDiziLabel(key: DiziKey) {
   return `${key} 调笛`
@@ -58,10 +66,30 @@ function getAudioErrorMessage(error: unknown) {
   return '麦克风启动失败，请检查浏览器权限后重试。'
 }
 
-type AppRoute = 'tuner' | 'settings'
+type AppRoute =
+  | 'tuner'
+  | 'hole-scores'
+  | 'hole-scores-new'
+  | 'hole-scores-jianpu'
+  | 'hole-scores-manual'
+  | 'settings'
 
 function getRouteFromHash(): AppRoute {
-  return window.location.hash === '#/settings' ? 'settings' : 'tuner'
+  const hash = window.location.hash
+  if (hash === '#/tuner') return 'tuner'
+  if (hash === '#/settings') return 'settings'
+  if (hash === '#/hole-scores/new') return 'hole-scores-new'
+  if (hash === '#/hole-scores/jianpu') return 'hole-scores-jianpu'
+  if (hash === '#/hole-scores/manual') return 'hole-scores-manual'
+  if (hash === '#/hole-scores') return 'hole-scores'
+  return 'tuner'
+}
+
+function getHashPathFromRoute(route: AppRoute) {
+  if (route === 'hole-scores-new') return '/hole-scores/new'
+  if (route === 'hole-scores-jianpu') return '/hole-scores/jianpu'
+  if (route === 'hole-scores-manual') return '/hole-scores/manual'
+  return `/${route}`
 }
 
 function getIsNativeShell(): boolean {
@@ -81,6 +109,7 @@ function WebBottomNavigation({
     icon: typeof Mic
   }> = [
     { route: 'tuner', label: '测音', icon: Mic },
+    { route: 'hole-scores', label: '洞洞谱', icon: BookOpen },
     { route: 'settings', label: '设置', icon: SlidersHorizontal },
   ]
 
@@ -89,7 +118,7 @@ function WebBottomNavigation({
       aria-label="主导航"
       className="shrink-0 border-t border-[var(--border)] bg-[var(--surface)] px-5 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 sm:pb-3"
     >
-      <div className="mx-auto grid max-w-md grid-cols-2 gap-2">
+      <div className="mx-auto grid max-w-md grid-cols-3 gap-2">
         {items.map((item) => {
           const Icon = item.icon
           const active = route === item.route
@@ -122,6 +151,12 @@ export default function App() {
   const { diziKey, fingeringProfileId, mode, targetLabel } = preferences
   const [route, setRoute] = useState<AppRoute>(getRouteFromHash)
   const [isNativeShell] = useState(getIsNativeShell)
+  const [currentHoleScore, setCurrentHoleScore] = useState<SavedScore | null>(
+    null,
+  )
+  const [manualDraftConfig, setManualDraftConfig] =
+    useState<ManualHoleScoreDraft | null>(null)
+  const [, setScoreLibraryVersion] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
   const [realtimeFreq, setRealtimeFreq] = useState<number | null>(null)
@@ -317,8 +352,86 @@ export default function App() {
 
   const handleRouteChange = (nextRoute: AppRoute) => {
     setRoute(nextRoute)
-    window.location.hash = `/${nextRoute}`
+    window.location.hash = getHashPathFromRoute(nextRoute)
   }
+
+  const refreshScoreLibrary = () => {
+    setScoreLibraryVersion((version) => version + 1)
+  }
+
+  const openHoleScore = (score: SavedScore) => {
+    setCurrentHoleScore(score)
+    setManualDraftConfig(null)
+    handleRouteChange(
+      score.mode === 'jianpu-generated'
+        ? 'hole-scores-jianpu'
+        : 'hole-scores-manual',
+    )
+  }
+
+  const renderHoleScoreRoute = () => {
+    if (route === 'hole-scores-new') {
+      return (
+        <NewHoleScorePage
+          defaultFingeringProfileId={fingeringProfileId}
+          defaultFluteKey={diziKey}
+          onBack={() => handleRouteChange('hole-scores')}
+          onCreateJianpu={() => {
+            setCurrentHoleScore(null)
+            setManualDraftConfig(null)
+            handleRouteChange('hole-scores-jianpu')
+          }}
+          onCreateManual={(draft) => {
+            setCurrentHoleScore(null)
+            setManualDraftConfig(draft)
+            handleRouteChange('hole-scores-manual')
+          }}
+        />
+      )
+    }
+
+    if (route === 'hole-scores-jianpu') {
+      return (
+        <JianpuHoleScoreEditor
+          defaultFingeringProfileId={fingeringProfileId}
+          defaultFluteKey={diziKey}
+          initialScore={currentHoleScore}
+          onBack={() => handleRouteChange('hole-scores')}
+          onSaved={(score) => {
+            setCurrentHoleScore(score)
+            refreshScoreLibrary()
+          }}
+        />
+      )
+    }
+
+    if (route === 'hole-scores-manual') {
+      return (
+        <ManualHoleScoreEditor
+          draftConfig={manualDraftConfig}
+          defaultFingeringProfileId={fingeringProfileId}
+          defaultFluteKey={diziKey}
+          initialScore={currentHoleScore}
+          onBack={() => handleRouteChange('hole-scores')}
+          onSaved={(score) => {
+            setCurrentHoleScore(score)
+            refreshScoreLibrary()
+          }}
+        />
+      )
+    }
+
+    return (
+      <HoleScoreHome
+        onCreate={() => handleRouteChange('hole-scores-new')}
+        onOpen={openHoleScore}
+        onRefresh={refreshScoreLibrary}
+      />
+    )
+  }
+
+  const isHoleScoreRoute = route.startsWith('hole-scores')
+  const isManualHoleScoreRoute = route === 'hole-scores-manual'
 
   return (
     <main
@@ -337,14 +450,19 @@ export default function App() {
       >
         <section
           className={[
-            'tuner-shell flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto rounded-none border-0 bg-[var(--panel)] px-5 py-4 shadow-none sm:px-6 sm:py-5',
+            'tuner-shell flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto rounded-none border-0 bg-[var(--panel)] shadow-none',
+            isManualHoleScoreRoute ? 'px-3 py-3 sm:px-4 sm:py-3' : 'px-5 py-4 sm:px-6 sm:py-5',
             isNativeShell
               ? 'sm:rounded-[2rem] sm:border sm:border-white/80'
               : '',
           ].join(' ')}
         >
-          <ModeTopTabs onChange={setMode} value={mode} />
-          {route === 'settings' ? (
+          {isHoleScoreRoute ? null : (
+            <ModeTopTabs onChange={setMode} value={mode} />
+          )}
+          {isHoleScoreRoute ? (
+            renderHoleScoreRoute()
+          ) : route === 'settings' ? (
             <SettingsPanel
               diziKey={diziKey}
               fingeringProfileId={fingeringProfileId}

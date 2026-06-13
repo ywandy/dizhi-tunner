@@ -20,6 +20,10 @@ export default function RootLayout() {
           <Label>测音</Label>
           <Icon sf={{ default: 'waveform', selected: 'waveform.circle.fill' }} />
         </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="hole-scores">
+          <Label>洞洞谱</Label>
+          <Icon sf={{ default: 'book.pages', selected: 'book.pages.fill' }} />
+        </NativeTabs.Trigger>
         <NativeTabs.Trigger name="settings">
           <Label>设置</Label>
           <Icon sf={{ default: 'slider.horizontal.3', selected: 'slider.horizontal.3' }} />

@@ -1,6 +1,12 @@
 import { describe, expect, test } from 'vitest'
 
-import { appendNativeShellRoute, getWebViewOriginWhitelist, normalizeWebViewDevUrl, resolveWebViewSource } from './webViewSource'
+import { appendNativeShellRoute, getWebViewOriginWhitelist, normalizeWebViewDevUrl, resolveWebViewSource, type NativeShellRoute } from './webViewSource'
+
+const supportedNativeShellRoutes: NativeShellRoute[] = [
+  'tuner',
+  'settings',
+  'hole-scores',
+]
 
 describe('webViewSource', () => {
   test('uses the configured dev URL ahead of the bundled local URL', () => {
@@ -37,9 +43,13 @@ describe('webViewSource', () => {
   })
 
   test('adds native shell marker and route hash to WebView URLs', () => {
+    expect(supportedNativeShellRoutes).toContain('hole-scores')
     expect(appendNativeShellRoute('http://localhost:5173/', 'settings')).toBe('http://localhost:5173/?native-shell=1#/settings')
     expect(appendNativeShellRoute('http://127.0.0.1:8080/index.html', 'tuner')).toBe(
       'http://127.0.0.1:8080/index.html?native-shell=1#/tuner',
+    )
+    expect(appendNativeShellRoute('http://localhost:5173/', 'hole-scores')).toBe(
+      'http://localhost:5173/?native-shell=1#/hole-scores',
     )
   })
 })

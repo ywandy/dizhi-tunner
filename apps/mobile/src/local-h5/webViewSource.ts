@@ -1,5 +1,5 @@
 export type WebViewSourceKind = 'dev' | 'local'
-export type NativeShellRoute = 'tuner' | 'settings'
+export type NativeShellRoute = 'tuner' | 'hole-scores' | 'settings'
 
 export type WebViewSource = {
   kind: WebViewSourceKind
