@@ -49,13 +49,20 @@ describe('h5Server helpers', () => {
     expect(nativeSource).toContain('self.keep_alive = [keep_alive boolValue]')
   })
 
-  test('uses the patched iOS static server source in the generated Pods project', () => {
-    const podsProject = readFileSync(
-      path.resolve(import.meta.dirname, '../../ios/Pods/Pods.xcodeproj/project.pbxproj'),
+  test('declares the iOS static server patch in workspace config', () => {
+    const workspaceConfig = readFileSync(
+      path.resolve(import.meta.dirname, '../../../../pnpm-workspace.yaml'),
+      'utf8',
+    )
+    const patchSource = readFileSync(
+      path.resolve(import.meta.dirname, '../../../../patches/react-native-static-server@0.5.0.patch'),
       'utf8',
     )
 
-    expect(podsProject).toContain('react-native-static-server@0.5.0_patch_hash=')
-    expect(podsProject).not.toContain('react-native-static-server@0.5.0_react-native')
+    expect(workspaceConfig).toContain(
+      'react-native-static-server@0.5.0: patches/react-native-static-server@0.5.0.patch',
+    )
+    expect(patchSource).toContain('+                  localOnly:(NSNumber *)localhost_only')
+    expect(patchSource).toContain('+                  keepAlive:(NSNumber *)keep_alive')
   })
 })
