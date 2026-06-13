@@ -1,0 +1,27 @@
+diff --git a/ios/FPStaticServer.m b/ios/FPStaticServer.m
+index a55a18f1e559142f2d2a7ed2ecde456e3775dfab..a8ca50aa1d78713927f6598e35444c13b356c678 100644
+--- a/ios/FPStaticServer.m
++++ b/ios/FPStaticServer.m
+@@ -32,8 +32,8 @@ - (dispatch_queue_t)methodQueue
+ 
+ RCT_EXPORT_METHOD(start: (NSString *)port
+                   root:(NSString *)optroot
+-                  localOnly:(BOOL *)localhost_only
+-                  keepAlive:(BOOL *)keep_alive
++                  localOnly:(NSNumber *)localhost_only
++                  keepAlive:(NSNumber *)keep_alive
+                   resolver:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject) {
+ 
+@@ -63,9 +63,9 @@ - (dispatch_queue_t)methodQueue
+     }
+ 
+ 
+-    self.keep_alive = keep_alive;
++    self.keep_alive = [keep_alive boolValue];
+ 
+-    self.localhost_only = localhost_only;
++    self.localhost_only = [localhost_only boolValue];
+ 
+     if(_webServer.isRunning != NO) {
+         NSLog(@"StaticServer already running at %@", self.url);

@@ -26,6 +26,7 @@ describe('App', () => {
   beforeEach(() => {
     vi.useFakeTimers()
     vi.setSystemTime(0)
+    window.history.replaceState(null, '', '/')
     localStorage.clear()
     pitchCallback = null
     stopTuner = vi.fn()
@@ -44,24 +45,61 @@ describe('App', () => {
   it('renders the focused tuner panel default state', () => {
     render(<App />)
 
+    const modeTabs = screen.getByRole('radiogroup', { name: '检测模式' })
+    expect(within(modeTabs).getByRole('radio', { name: '实时检测' })).toHaveAttribute('aria-checked', 'true')
     expect(screen.getByRole('heading', { name: '笛子音准测试' })).toBeInTheDocument()
     expect(screen.getByText('D 调笛 · 筒音作5')).toBeInTheDocument()
     expect(screen.getByText('等待吹奏')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '开始检测' })).toBeInTheDocument()
   })
 
+  it('switches tuning mode from the immersive top tabs', () => {
+    render(<App />)
+
+    const modeTabs = screen.getByRole('radiogroup', { name: '检测模式' })
+    fireEvent.click(within(modeTabs).getByRole('radio', { name: '指定音练习' }))
+
+    expect(within(modeTabs).getByRole('radio', { name: '指定音练习' })).toHaveAttribute('aria-checked', 'true')
+    expect(screen.getByText('目标 5')).toBeInTheDocument()
+  })
+
+  it('uses web bottom navigation to switch between tuner and settings', () => {
+    render(<App />)
+
+    const navigation = screen.getByRole('navigation', { name: '主导航' })
+    expect(within(navigation).getByRole('button', { name: '测音' })).toHaveAttribute('aria-current', 'page')
+
+    fireEvent.click(within(navigation).getByRole('button', { name: '设置' }))
+
+    expect(screen.getByRole('heading', { name: '调音设置' })).toBeInTheDocument()
+    expect(within(navigation).getByRole('button', { name: '设置' })).toHaveAttribute('aria-current', 'page')
+    expect(screen.queryByRole('button', { name: '开始检测' })).not.toBeInTheDocument()
+  })
+
+  it('hides the web bottom navigation when rendered inside the native shell', () => {
+    window.history.replaceState(null, '', '/?native-shell=1#/settings')
+
+    render(<App />)
+
+    expect(screen.queryByRole('navigation', { name: '主导航' })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '调音设置' })).toBeInTheDocument()
+    expect(document.querySelector('.native-shell .tuner-shell')).toBeInTheDocument()
+  })
+
   it('shows fingering selector and target selector only in target practice mode', () => {
     render(<App />)
 
-    fireEvent.click(screen.getByRole('button', { name: '打开调音设置' }))
-    const dialog = screen.getByRole('dialog')
+    const navigation = screen.getByRole('navigation', { name: '主导航' })
+    fireEvent.click(within(navigation).getByRole('button', { name: '设置' }))
 
-    expect(within(dialog).getByText('指法')).toBeInTheDocument()
-    expect(within(dialog).queryByText('目标音')).not.toBeInTheDocument()
+    expect(screen.getByText('指法')).toBeInTheDocument()
+    expect(screen.queryByText('目标音')).not.toBeInTheDocument()
+    expect(screen.queryByText('检测模式')).not.toBeInTheDocument()
 
-    fireEvent.click(within(dialog).getByRole('radio', { name: '指定音练习' }))
+    const modeTabs = screen.getByRole('radiogroup', { name: '检测模式' })
+    fireEvent.click(within(modeTabs).getByRole('radio', { name: '指定音练习' }))
 
-    expect(within(dialog).getByText('目标音')).toBeInTheDocument()
+    expect(screen.getByText('目标音')).toBeInTheDocument()
   })
 
   it('shows realtime frequency separately from the one-second average frequency', async () => {

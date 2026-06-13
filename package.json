@@ -6,6 +6,12 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
+    "build:mobile-h5": "MOBILE_H5_BUILD=1 vite build",
+    "mobile:pack": "pnpm build:mobile-h5 && node scripts/pack-mobile-h5.mjs",
+    "mobile:start": "pnpm --filter dizhi-tunner-mobile start",
+    "mobile:ios:dev": "EXPO_PUBLIC_WEBVIEW_DEV_URL=${EXPO_PUBLIC_WEBVIEW_DEV_URL:-http://localhost:5173} pnpm --filter dizhi-tunner-mobile ios",
+    "mobile:ios": "pnpm mobile:pack && EXPO_PUBLIC_WEBVIEW_DEV_URL= pnpm --filter dizhi-tunner-mobile ios",
+    "mobile:android": "pnpm mobile:pack && EXPO_PUBLIC_WEBVIEW_DEV_URL= pnpm --filter dizhi-tunner-mobile android",
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest run",
     "typecheck": "tsc -b"

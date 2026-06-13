@@ -51,6 +51,54 @@ pnpm build
 pnpm preview
 ```
 
+## Expo App 壳
+
+本仓库包含一个 Expo iOS/Android App 壳，位于 `apps/mobile`。它会把当前 H5 构建产物打包进 App，并通过本地 WebView 离线运行。
+
+首次安装依赖：
+
+```bash
+pnpm install
+```
+
+打包离线 H5 资源：
+
+```bash
+pnpm mobile:pack
+```
+
+运行离线原生 App：
+
+```bash
+pnpm mobile:ios
+pnpm mobile:android
+```
+
+开发期也可以让 iOS App 壳直接加载 Vite dev server，跳过本地 `dist`/`h5.zip`：
+
+```bash
+pnpm dev
+pnpm mobile:ios:dev
+```
+
+其中：
+
+- `pnpm mobile:ios:dev` 默认把 WebView 指向 `http://localhost:5173`，适合 iOS Simulator。
+- 真机调试时，先保持 `pnpm dev` 运行，再使用局域网地址覆盖：
+
+```bash
+EXPO_PUBLIC_WEBVIEW_DEV_URL=http://你的电脑局域网IP:5173 pnpm mobile:ios:dev
+```
+
+补充说明：
+
+- `pnpm mobile:pack` 会使用移动端相对路径构建 Vite 产物，并生成 `apps/mobile/assets/h5.zip`。
+- `pnpm mobile:ios` / `pnpm mobile:android` 会先执行 `pnpm mobile:pack`，并清空 dev URL，确保加载打包进 App 的离线 H5。
+- 配置了 `EXPO_PUBLIC_WEBVIEW_DEV_URL` 时，App 会优先加载该 dev 地址，不会启动本地静态服务。
+- App 启动后会申请麦克风权限，并在 WebView 中加载内置 H5 或配置的 dev 地址。
+- 麦克风采集依赖 iOS/Android WebView 对 `getUserMedia` 的支持，最终效果需要用真机或 EAS development build 验证；Expo Go 不能完整代表生产行为。
+- 当前 App 名称、Bundle ID 和 Android package 使用占位配置，正式发布前需要替换。
+
 ## 音准计算
 
 音分偏差使用标准 cents 公式：

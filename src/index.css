@@ -93,6 +93,11 @@ select {
     linear-gradient(180deg, rgb(255 255 255 / 0.72), transparent 48%);
 }
 
+.native-shell .tuner-shell {
+  padding-top: calc(env(safe-area-inset-top) + 0.75rem);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 7rem);
+}
+
 .jianpu-display {
   font-size: clamp(3.6rem, 20vw, 6.8rem);
   font-variant-numeric: tabular-nums;
@@ -120,6 +125,16 @@ select {
     box-shadow:
       0 28px 80px rgb(16 32 24 / 0.14),
       0 1px 0 rgb(255 255 255 / 0.85) inset;
+  }
+
+  .web-app-shell {
+    box-shadow:
+      0 28px 80px rgb(16 32 24 / 0.14),
+      0 1px 0 rgb(255 255 255 / 0.85) inset;
+  }
+
+  .web-app-shell .tuner-shell {
+    box-shadow: none;
   }
 }
 

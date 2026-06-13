@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { SettingsSheet } from './components/SettingsSheet'
+import { Mic, SlidersHorizontal } from 'lucide-react'
+
+import { ModeTopTabs } from './components/ModeTopTabs'
+import { SettingsPanel } from './components/SettingsPanel'
 import { StartStopButton } from './components/StartStopButton'
 import { TuningMeter } from './components/TuningMeter'
 import { ResultPanel } from './components/ResultPanel'
@@ -55,9 +58,70 @@ function getAudioErrorMessage(error: unknown) {
   return '麦克风启动失败，请检查浏览器权限后重试。'
 }
 
+type AppRoute = 'tuner' | 'settings'
+
+function getRouteFromHash(): AppRoute {
+  return window.location.hash === '#/settings' ? 'settings' : 'tuner'
+}
+
+function getIsNativeShell(): boolean {
+  return new URLSearchParams(window.location.search).get('native-shell') === '1'
+}
+
+function WebBottomNavigation({
+  route,
+  onRouteChange,
+}: {
+  route: AppRoute
+  onRouteChange: (route: AppRoute) => void
+}) {
+  const items: Array<{
+    route: AppRoute
+    label: string
+    icon: typeof Mic
+  }> = [
+    { route: 'tuner', label: '测音', icon: Mic },
+    { route: 'settings', label: '设置', icon: SlidersHorizontal },
+  ]
+
+  return (
+    <nav
+      aria-label="主导航"
+      className="shrink-0 border-t border-[var(--border)] bg-[var(--surface)] px-5 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 sm:pb-3"
+    >
+      <div className="mx-auto grid max-w-md grid-cols-2 gap-2">
+        {items.map((item) => {
+          const Icon = item.icon
+          const active = route === item.route
+
+          return (
+            <button
+              aria-current={active ? 'page' : undefined}
+              className={[
+                'flex min-h-12 items-center justify-center gap-2 rounded-2xl text-sm font-bold transition-[background,color,transform] active:scale-[0.98]',
+                active
+                  ? 'bg-[var(--status-good-bg)] text-[var(--status-good)]'
+                  : 'text-[var(--muted-foreground)] hover:bg-[var(--surface-muted)]',
+              ].join(' ')}
+              key={item.route}
+              onClick={() => onRouteChange(item.route)}
+              type="button"
+            >
+              <Icon aria-hidden className="h-5 w-5" />
+              {item.label}
+            </button>
+          )
+        })}
+      </div>
+    </nav>
+  )
+}
+
 export default function App() {
   const [preferences, setPreferences] = useState<AppPreferences>(loadPreferences)
   const { diziKey, fingeringProfileId, mode, targetLabel } = preferences
+  const [route, setRoute] = useState<AppRoute>(getRouteFromHash)
+  const [isNativeShell] = useState(getIsNativeShell)
   const [isRunning, setIsRunning] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
   const [realtimeFreq, setRealtimeFreq] = useState<number | null>(null)
@@ -65,7 +129,6 @@ export default function App() {
   const [averageFreq, setAverageFreq] = useState<number | null>(null)
   const [averageResult, setAverageResult] = useState<TuningResult | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [settingsOpen, setSettingsOpen] = useState(false)
   const tunerRef = useRef<TunerController | null>(null)
   const stateRef = useRef({ diziKey, fingeringProfileId, mode, targetLabel })
   const pitchWindowRef = useRef(createRollingPitchWindow(1000))
@@ -87,6 +150,15 @@ export default function App() {
   useEffect(() => {
     savePreferences(preferences)
   }, [preferences])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setRoute(getRouteFromHash())
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
 
   const calculateResult = useCallback((frequency: number) => {
     const {
@@ -243,60 +315,93 @@ export default function App() {
   const targetFrequency =
     mode === 'target' ? selectedTarget?.frequency ?? null : averageResult?.frequency ?? null
 
+  const handleRouteChange = (nextRoute: AppRoute) => {
+    setRoute(nextRoute)
+    window.location.hash = `/${nextRoute}`
+  }
+
   return (
-    <main className="h-dvh overflow-hidden bg-[var(--panel)] p-0 text-[var(--foreground)] sm:bg-[var(--app-bg)] sm:px-6 sm:py-8">
-      <div className="mx-auto flex h-full w-full max-w-none flex-col sm:min-h-[calc(100dvh-4rem)] sm:max-w-md">
-        <section className="tuner-shell flex h-full flex-1 flex-col overflow-x-hidden overflow-y-auto rounded-none border-0 bg-[var(--panel)] px-5 py-4 shadow-none sm:rounded-[2rem] sm:border sm:border-white/80 sm:px-6 sm:py-6">
-          <header className="mb-[clamp(1rem,4dvh,2.5rem)] flex items-center justify-between gap-4">
-            <div className="min-w-0">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted-foreground)]">
-                {summaryMode}
-              </p>
-              <h1 className="truncate text-xl font-black tracking-normal text-[var(--foreground)]">
-                笛子音准测试
-              </h1>
-              <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">
-                {getDiziSummary(diziKey, fingeringProfileId)}
-              </p>
-            </div>
-            <SettingsSheet
+    <main
+      className={[
+        'h-dvh overflow-hidden bg-[var(--panel)] p-0 text-[var(--foreground)] sm:bg-[var(--app-bg)] sm:px-6 sm:py-5',
+        isNativeShell ? 'native-shell' : '',
+      ].join(' ')}
+    >
+      <div
+        className={[
+          'mx-auto flex h-full min-h-0 w-full max-w-none flex-col sm:min-h-[calc(100dvh-4rem)] sm:max-w-md',
+          isNativeShell
+            ? ''
+            : 'web-app-shell sm:overflow-hidden sm:rounded-[2rem] sm:border sm:border-white/80 sm:bg-[var(--panel)]',
+        ].join(' ')}
+      >
+        <section
+          className={[
+            'tuner-shell flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto rounded-none border-0 bg-[var(--panel)] px-5 py-4 shadow-none sm:px-6 sm:py-5',
+            isNativeShell
+              ? 'sm:rounded-[2rem] sm:border sm:border-white/80'
+              : '',
+          ].join(' ')}
+        >
+          <ModeTopTabs onChange={setMode} value={mode} />
+          {route === 'settings' ? (
+            <SettingsPanel
               diziKey={diziKey}
               fingeringProfileId={fingeringProfileId}
               mode={mode}
               onDiziKeyChange={setDiziKey}
               onFingeringProfileChange={setFingeringProfileId}
-              onModeChange={setMode}
-              onOpenChange={setSettingsOpen}
               onTargetLabelChange={setTargetLabel}
-              open={settingsOpen}
               targetLabel={targetLabel}
               targets={targets}
             />
-          </header>
+          ) : (
+            <>
+              <header className="mb-[clamp(0.75rem,3dvh,1.75rem)]">
+                <div className="min-w-0">
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted-foreground)]">
+                    {summaryMode}
+                  </p>
+                  <h1 className="truncate text-xl font-black tracking-normal text-[var(--foreground)]">
+                    笛子音准测试
+                  </h1>
+                  <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">
+                    {getDiziSummary(diziKey, fingeringProfileId)}
+                  </p>
+                </div>
+              </header>
 
-          <div className="flex flex-1 flex-col justify-center gap-[clamp(1rem,4dvh,2.25rem)]">
-            <ResultPanel
-              averageFreq={averageFreq}
-              isRunning={isRunning}
-              mode={mode}
-              realtimeFreq={realtimeFreq}
-              result={averageResult}
-              targetFrequency={targetFrequency}
-              targetLabel={targetLabel}
-            />
-            <TuningMeter cents={realtimeResult?.cents ?? null} />
-          </div>
+              <div className="flex flex-1 flex-col justify-center gap-[clamp(0.75rem,3dvh,1.75rem)]">
+                <ResultPanel
+                  averageFreq={averageFreq}
+                  isRunning={isRunning}
+                  mode={mode}
+                  realtimeFreq={realtimeFreq}
+                  result={averageResult}
+                  targetFrequency={targetFrequency}
+                  targetLabel={targetLabel}
+                />
+                <TuningMeter cents={realtimeResult?.cents ?? null} />
+              </div>
 
-          <div className="mt-[clamp(1rem,4dvh,2.25rem)] space-y-3 pb-[env(safe-area-inset-bottom)]">
-            {error ? <Alert variant="destructive">{error}</Alert> : null}
-            <StartStopButton
-              isRunning={isRunning}
-              isStarting={isStarting}
-              onStart={handleStart}
-              onStop={handleStop}
-            />
-          </div>
+              <div className="mt-[clamp(0.75rem,3dvh,1.75rem)] space-y-3">
+                {error ? <Alert variant="destructive">{error}</Alert> : null}
+                <StartStopButton
+                  isRunning={isRunning}
+                  isStarting={isStarting}
+                  onStart={handleStart}
+                  onStop={handleStop}
+                />
+              </div>
+            </>
+          )}
         </section>
+        {isNativeShell ? null : (
+          <WebBottomNavigation
+            onRouteChange={handleRouteChange}
+            route={route}
+          />
+        )}
       </div>
     </main>
   )

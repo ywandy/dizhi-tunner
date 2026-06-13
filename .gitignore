@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 build/
+apps/mobile/ios/
+apps/mobile/android/
 
 # Local environment
 .env
